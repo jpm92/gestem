@@ -1,0 +1,4 @@
+*.sqlite3
+gestem/settings/dev.py
+*/__pycache__
+gestem/settings/__pycache__
