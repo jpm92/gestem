@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from gestem.aux import keygen
 
 
 class Producto(models.Model):
@@ -79,7 +80,7 @@ class Distribuidor(models.Model):
 class Almacen(models.Model):
     """ Este modelo representa cada una de las localizaciones posibles donde
     recepcionar un producto. Están asociados a la dirección de entrega
-    (Entrega). Así, cada dirección de entrega poseerá distintas
+    (class Entrega). Así, cada dirección de entrega poseerá distintas
     localizaciones (Frigorífico 1, Mueble 3, etc.) donde guardar el producto
     una vez recepcionado. """
 
@@ -124,11 +125,8 @@ class Articulo(models.Model):
     unidades = models.IntegerField(
         default=1
     )
-    ESTADOS = None  # TODO
-    estado = models.CharField(
-        max_length=2,
-        choices=ESTADOS,
-        default=None  # TODO
+    pendiente = models.BooleanField(
+        default=True
     )
     fecha_recepcion = models.DateTimeField(
         auto_now_add=True,
@@ -148,8 +146,7 @@ class Pedido(models.Model):
     'Pedido.articulo_set.all()'. """
 
     codigo = models.CharField(
-        default=None,  # TODO: Añadir funcion keygen()
-        max_length=9,  # TODO: Revisar
+        max_length=15,
         help_text=_('Código único identificativo del pedido.')
     )
     fecha_creacion = models.DateTimeField(
