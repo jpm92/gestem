@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-from gestem.aux import keygen
 
 
 class Producto(models.Model):
@@ -35,7 +34,16 @@ class Producto(models.Model):
         null=True
     )
     distribuidores = None  # TODO
-    CATEGORIAS = None  # TODO
+    CATEGORIAS = {
+        'a': _('Cultivo celular'),
+        'b': _('Kits viabilidad'),
+        'c': _('Esferas'),
+        'd': _('Western Blot'),
+        'e': _('PCR'),
+        'f': _('Tinciones.'),
+        'g': _('Impresión 3D.'),
+        'h': _('Fungible.')
+    }
     categoria = models.CharField(
         max_length=1,
         choices=CATEGORIAS,
@@ -114,8 +122,9 @@ class Entrega(models.Model):
 
 
 class Articulo(models.Model):
-    """ Este modelo representa la anotacion de un producto para que sea
-    incluido en un pedido, junto al numero de unidades, fecha y usuario. """
+    """ Este modelo representa la instancia de un producto anotado por un
+    usuario y que se encuentra pendiente de ser incluido en un pedido, junto al
+    numero de unidades, fecha y usuario. """
 
     producto = models.ForeignKey(
         Producto,
@@ -125,7 +134,12 @@ class Articulo(models.Model):
     unidades = models.IntegerField(
         default=1
     )
-    pendiente = models.BooleanField(
+    ESTADOS = {
+        'p': _('Pendiente.'),
+        'i': _('En proceso.'),
+        'r': _('Recibido.')
+    }
+    estado = models.BooleanField(
         default=True
     )
     fecha_recepcion = models.DateTimeField(
@@ -156,10 +170,17 @@ class Pedido(models.Model):
     fecha_cpm = models.DateTimeField(
         help_text=_('Fecha de asignación de CPM.')
     )
+    ESTADOS = {
+        's': _('Proforma solicitada.'),
+        'c': _('CPM solicitado.'),
+        'v': _('Para validar.'),
+        'p': _('Pedido realizado.'),  # TODO: Comentar a Isabel.
+        'r': _('Recibido.')
+    }
     estado = models.CharField(
-        max_length=2,
-        choices=None
-    )  # TODO:  Revisar
+        max_length=1,
+        choices=ESTADOS
+    )
     distribuidor = models.ForeignKey(
         Distribuidor,
         on_delete=models.SET_NULL,
