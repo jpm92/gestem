@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from gestion.models import (
     Articulo,
     Pedido,
-    Nota
 )
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
@@ -10,7 +9,7 @@ from django.contrib.auth.mixins import (
 )
 from gestion.forms import (
     ArticuloForm,
-    EntregaForm
+    NotaForm,
 )
 from django.forms import formset_factory
 from django.utils.translation import gettext_lazy as _
@@ -58,33 +57,22 @@ def NuevaNota(request):
         articulos_formset = ArticuloFormset(request.POST)
         # Instanciamos un objeto de la clase EntregaForm y lo populamos con
         # los datos del post request
-        entrega_form = EntregaForm(request.POST)
+        nota_form = NotaForm(request.POST)
         # Si los formularios han sido rellenados correctamente:
-        if articulos_formset.is_valid() and entrega_form.is_valid():
-            # Recopilamos los datos de entrega a partir de los datos limpios
-            # del formulario.
-            entrega = entrega_form.cleaned_data['direccion']
-            # Creamos una nota con los datos que recopilados de entrega, y el
-            # usuario (recopilado a partir del request). La fecha se añade sola
-            # gracias al "auto_now_add" del campo del modelo Nota.
-            nota = Nota(
-                entrega=entrega,
-                usuario=request.user
-            )
+        if articulos_formset.is_valid() and nota_form.is_valid():
+            # Guardamos el objeto formulario sin anotarlo en la base de datos.
+            nota = nota_form.save(commit=False)
+            # Añadimos el usuario al objeto formulario.
+            nota.usuario = request.user
+            # Escribimos los datos del objeto formulario en la base de datos.
             nota.save()
             # Ahora iteramos cada uno de los articulos presentes en el
             # formset y los registramos en la base de datos, asignandole a cada
             # uno la nota anterior (que posee informacion común a todos los
             # articulos).
             for articulo_form in articulos_formset:
-                articulo_data = articulo_form.cleaned_data
-                producto = articulo_data['producto']
-                unidades = articulo_data['unidades']
-                articulo = Articulo(
-                    producto=producto,
-                    unidades=unidades,
-                    nota=nota
-                )
+                articulo = articulo_form.save(commit=False)
+                articulo.nota = nota
                 articulo.save()
             messages.success(
                 request,
@@ -95,10 +83,10 @@ def NuevaNota(request):
 
     else:
         articulos = ArticuloFormset()
-        entrega = EntregaForm()
+        nota = NotaForm()
         context = {
             'articulos': articulos,
-            'entrega': entrega
+            'nota': nota
         }
         return render(request, "gestion/nuevanota.html", context)
 # TODO: Añadir formulario para registro de Notas en modo autogestión
