@@ -33,7 +33,7 @@ class Producto(models.Model):
         blank=True,
         null=True
     )
-    distribuidores = None  # TODO
+    distribuidores = None  # QUESTION: ¿Es necesario un m2m o ignoro?
     CATEGORIAS = {
         'a': _('Cultivo celular'),
         'b': _('Kits viabilidad'),
