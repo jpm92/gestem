@@ -6,7 +6,7 @@ from gestion.models import (
 )
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
-    PermissionRequiredMixin
+    #  PermissionRequiredMixin
 )
 from gestion.forms import (
     ArticuloForm,
@@ -72,7 +72,7 @@ def NuevaNota(request):
                 usuario=request.user
             )
             nota.save()
-            # TODO: Ahora iteramos cada uno de los articulos presentes en el
+            # Ahora iteramos cada uno de los articulos presentes en el
             # formset y los registramos en la base de datos, asignandole a cada
             # uno la nota anterior (que posee informacion común a todos los
             # articulos).
