@@ -139,8 +139,11 @@ class Articulo(models.Model):
         'i': _('En proceso.'),
         'r': _('Recibido.')
     }
-    estado = models.BooleanField(
-        default=True
+    estado = models.CharField(
+        max_length=1,
+        choices=ESTADOS,
+        default='p',
+        help_text=_('Estado de este articulo.')
     )
     fecha_recepcion = models.DateTimeField(
         auto_now_add=True,

@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('gestion.urls')),
 ]
+
+admin.site.site_header = _("Administración de TERSTEM")
+admin.site.site_title = _("Portal de administración de TERSTEM")
+admin.site.index_title = _("Bienvenido al portal de administración de TERSTEM")
