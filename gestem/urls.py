@@ -22,6 +22,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gestion.urls')),
+    path("select2/", include("django_select2.urls")),
 ]
 
 admin.site.site_header = _("Administración de TERSTEM")
