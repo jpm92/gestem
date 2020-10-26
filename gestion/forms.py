@@ -1,6 +1,15 @@
 """ Este modulo contiene los formularios necesarios en la app gestion. """
 from django import forms
 from .models import Articulo, Nota
+from django_select2 import forms as s2forms
+
+
+class ProductoWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "nombre_amistoso__icontains",
+        "nombre_fabricante__icontains",
+        "referencia__icontains"
+    ]
 
 
 class ArticuloForm(forms.ModelForm):
@@ -9,6 +18,9 @@ class ArticuloForm(forms.ModelForm):
     class Meta:
         model = Articulo
         fields = ['producto', 'unidades']
+        widgets = {
+            "producto": ProductoWidget,
+        }
 
 
 class NotaForm(forms.ModelForm):
