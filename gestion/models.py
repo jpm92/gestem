@@ -34,16 +34,16 @@ class Producto(models.Model):
         null=True
     )
     distribuidores = None  # QUESTION: ¿Es necesario un m2m o ignoro?
-    CATEGORIAS = {
-        'a': _('Cultivo celular'),
-        'b': _('Kits viabilidad'),
-        'c': _('Esferas'),
-        'd': _('Western Blot'),
-        'e': _('PCR'),
-        'f': _('Tinciones.'),
-        'g': _('Impresión 3D.'),
-        'h': _('Fungible.')
-    }
+    CATEGORIAS = [
+        ('a', _('Cultivo celular')),
+        ('b', _('Kits viabilidad')),
+        ('c', _('Esferas')),
+        ('d', _('Western Blot')),
+        ('e', _('PCR')),
+        ('f', _('Tinciones.')),
+        ('g', _('Impresión 3D.')),
+        ('h', _('Fungible.'))
+    ]
     categoria = models.CharField(
         max_length=1,
         choices=CATEGORIAS,
@@ -134,11 +134,11 @@ class Articulo(models.Model):
     unidades = models.IntegerField(
         default=1
     )
-    ESTADOS = {
-        'p': _('Pendiente.'),
-        'i': _('En proceso.'),
-        'r': _('Recibido.')
-    }
+    ESTADOS = [
+        ('p', _('Pendiente.')),
+        ('i', _('En proceso.')),
+        ('r', _('Recibido.'))
+    ]
     estado = models.CharField(
         max_length=1,
         choices=ESTADOS,
@@ -173,13 +173,13 @@ class Pedido(models.Model):
     fecha_cpm = models.DateTimeField(
         help_text=_('Fecha de asignación de CPM.')
     )
-    ESTADOS = {
-        's': _('Proforma solicitada.'),
-        'c': _('CPM solicitado.'),
-        'v': _('Para validar.'),
-        'p': _('Pedido realizado.'),  # TODO: Comentar a Isabel.
-        'r': _('Recibido.')
-    }
+    ESTADOS = [
+        ('s', _('Proforma solicitada.')),
+        ('c', _('CPM solicitado.')),
+        ('v', _('Para validar.')),
+        ('p', _('Pedido realizado.')),  # TODO: Comentar a Isabel.
+        ('r', _('Recibido.'))
+    ]
     estado = models.CharField(
         max_length=1,
         choices=ESTADOS
