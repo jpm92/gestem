@@ -1,6 +1,40 @@
 {% extends "base_generic.html" %}
 {% block titulo %}Tablón | PEDIDOS TERSTEM{% endblock %}
-{% block header %}Tablón personal.{% endblock %}
+{% block header %}Bienvenido a tu tablón, {{ request.user.get_short_name }}.{% endblock %}
 {% block contenido %}
-  <p>Test</p>
+  {% if articulo_list %}
+  <table class="table table-striped table-hover table-sm">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Fecha</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Producto</th>
+        <th scope="col">Referencia</th>
+        <th scope="col">Fabricante</th>
+        <th scope="col">Unidades</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for articulo in articulo_list %}
+      <tr>
+        <th scope="row">{{ articulo.nota.fecha }}</th>
+        {% if articulo.estado == 'i' %}
+        <td>{{ articulo.pedido.get_estado_display }}</td>
+        {% else %}
+        <td>{{ articulo.get_estado_display }}</td>
+        {% endif %}
+        <td>{{ articulo.producto.nombre_fabricante }}</td>
+        <td>{{ articulo.producto.referencia }}</td>
+        <td>{{ articulo.producto.fabricante.nombre }}</td>
+        <td>{{ articulo.pedido.distribuidor.nombre }}</td>
+        <td>{{ articulo.unidades }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-dark" role="alert">
+    ¡Vaya! Parece que no hay nada que mostrar...
+  </div>
+  {% endif %}
 {% endblock %}
