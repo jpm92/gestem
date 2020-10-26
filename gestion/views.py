@@ -21,15 +21,22 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 
 # REVIEW: Comprobar que funciona Tablon ListView
-class Tablon(LoginRequiredMixin, generic.ListView):
+class Tablon(generic.ListView):
     model = Articulo
-    ordering = ['-fecha']
     paginate_by = 15
     template_name = 'gestion/tablon.html'
 
     def get_queryset(self):
+        """ Modificamos el método para obtener el queryset, de manera que
+        los articulos esten filtrados por usuario. Ademas los ordenamos segun
+        la fecha de la nota a la que pertenecen. """
         usuario = self.request.user
-        articulos = Articulo.objects.filter(nota__usuario=usuario)
+        articulos = Articulo.objects.filter(
+            nota__usuario=usuario
+            ).order_by(  # QUESTION: No se si se podría hacer con "ordering"
+                '-nota__fecha',
+                'producto__nombre_amistoso'
+            )
         return articulos
 
 
