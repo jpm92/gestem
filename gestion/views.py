@@ -39,6 +39,20 @@ class Tablon(generic.ListView):
             )
         return articulos
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        usuario = self.request.user
+        total = Articulo.objects.filter(nota__usuario=usuario)
+        estads = {
+            'total': total.count(),
+            'recibidos': total.filter(estado='r').count(),
+            'pendientes': total.exclude(estado='r').count()
+        }
+        context['estads'] = estads
+        return context
+
 
 # TODO: Añadir vista para tablón Secretario
 class Secretario(LoginRequiredMixin, generic.ListView):
