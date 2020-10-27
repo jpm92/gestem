@@ -97,7 +97,8 @@ class Almacen(models.Model):
         help_text=_('Nombre del lugar de almacenaje.')
     )
     descripcion = models.TextField(
-        help_text=_('Descripción del almacén.')
+        help_text=_('Descripción del almacén.'),
+        blank=True
     )
     lugar = models.ForeignKey(
         'Entrega',
@@ -146,8 +147,8 @@ class Articulo(models.Model):
         help_text=_('Estado de este articulo.')
     )
     fecha_recepcion = models.DateTimeField(
-        auto_now_add=True,
-        help_text=_('Fecha de recepción de este articulo.')
+        help_text=_('Fecha de recepción de este articulo.'),
+        blank=True
     )
     nota = models.ForeignKey(
         'Nota',
@@ -171,7 +172,8 @@ class Pedido(models.Model):
         help_text=_('Fecha de creación del pedido.')
     )
     fecha_cpm = models.DateTimeField(
-        help_text=_('Fecha de asignación de CPM.')
+        help_text=_('Fecha de asignación de CPM.'),
+        blank=True
     )
     ESTADOS = [
         ('s', _('Proforma solicitada.')),
