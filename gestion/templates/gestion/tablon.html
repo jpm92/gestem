@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 {% block titulo %}Tablón | PEDIDOS TERSTEM{% endblock %}
-{% block header %}Bienvenido a tu tablón, {{ request.user.get_short_name }}.{% endblock %}
+{% block header %}Bienvenido a tu tablón, {{ request.user.get_short_name }} <i class="far fa-laugh-beam"></i>{% endblock %}
 {% block contenido %}
   {% if articulo_list %}
   <table class="table table-striped table-hover table-sm">
@@ -9,29 +9,64 @@
         <th scope="col">Fecha</th>
         <th scope="col">Estado</th>
         <th scope="col">Producto</th>
+        <th scope="col">Pedido</th>
         <th scope="col">Referencia</th>
         <th scope="col">Fabricante</th>
+        <th scope="col">Distribuidor</th>
         <th scope="col">Unidades</th>
       </tr>
     </thead>
     <tbody>
       {% for articulo in articulo_list %}
       <tr>
-        <th scope="row">{{ articulo.nota.fecha }}</th>
+        <th scope="row">{{ articulo.nota.fecha|date:"SHORT_DATETIME_FORMAT" }}</th>
         {% if articulo.estado == 'i' %}
         <td>{{ articulo.pedido.get_estado_display }}</td>
         {% else %}
         <td>{{ articulo.get_estado_display }}</td>
         {% endif %}
         <td>{{ articulo.producto.nombre_fabricante }}</td>
+        <td>
+          {% if articulo.estado != 'p'%}
+          {{ articulo.pedido.codigo }}
+          {% else %}
+          Pendiente.
+          {% endif %}
+        </td>
+
         <td>{{ articulo.producto.referencia }}</td>
         <td>{{ articulo.producto.fabricante.nombre }}</td>
-        <td>{{ articulo.pedido.distribuidor.nombre }}</td>
+        <td>
+          {% if articulo.pedido %}
+          {{ articulo.pedido.distribuidor.nombre }}
+          {% else %}
+          Pendiente.
+          {% endif %}
+        </td>
         <td>{{ articulo.unidades }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+  <!-- <Paginación bootstrap> -->
+  <nav aria-label="Navegacion por las paginas">
+    <ul class="pagination pagination-sm">
+      <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+        <a class="page-link" {% if page_obj.has_previous %}href="?page={{ page_obj.previous_page_number }}"{% endif %} aria-label="Anterior">
+          <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+        </a>
+      </li>
+      {% for i in paginator.page_range %}
+      <li class="page-item {% if page_obj.number == i%}active{% endif %}"><a class="page-link" href="?page={{ i }}">1</a></li>
+      {% endfor %}
+      <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+        <a class="page-link" {% if page_obj.has_next %}href="?page={{ page_obj.next_page_number }}"{% endif %} aria-label="Siguiente">
+          <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- <Paginación bootstrap/> -->
   {% else %}
   <div class="alert alert-dark" role="alert">
     ¡Vaya! Parece que no hay nada que mostrar...
