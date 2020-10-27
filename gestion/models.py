@@ -171,6 +171,11 @@ class Pedido(models.Model):
         auto_now_add=True,
         help_text=_('Fecha de creación del pedido.')
     )
+    cpm = models.CharField(
+        max_length=13,
+        default=_('Pendiente.'),
+        blank=True
+    )
     fecha_cpm = models.DateTimeField(
         help_text=_('Fecha de asignación de CPM.'),
         blank=True
