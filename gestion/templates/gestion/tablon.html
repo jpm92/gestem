@@ -29,6 +29,7 @@
             <th scope="col">Estado</th>
             <th scope="col">Producto</th>
             <th scope="col">Pedido</th>
+            <th scope="col">CPM</th>
             <th scope="col">Referencia</th>
             <th scope="col">Fabricante</th>
             <th scope="col">Distribuidor</th>
@@ -45,9 +46,16 @@
             <td>{{ articulo.get_estado_display }}</td>
             {% endif %}
             <td>{{ articulo.producto.nombre_fabricante }}</td>
-            <td>
+            <td class="user-select-all">
               {% if articulo.estado != 'p'%}
               {{ articulo.pedido.codigo }}
+              {% else %}
+              Pendiente.
+              {% endif %}
+            </td>
+            <td class="user-select-all">
+              {% if articulo.estado != 'p'%}
+              {{ articulo.pedido.cpm }}
               {% else %}
               Pendiente.
               {% endif %}
