@@ -201,6 +201,12 @@ class Pedido(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+    centro_gasto = models.CharField(
+        'CentroGasto',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
 
 class Nota(models.Model):
@@ -225,4 +231,18 @@ class Nota(models.Model):
         Entrega,
         on_delete=models.SET_NULL,
         null=True
+    )
+
+
+class CentroGasto(models.Model):
+    """ Este modelo representa a un centro de gasto al cual cargar el
+    importe de un pedido. Los administradores lo asignan al crear el pedido."""
+
+    nombre = models.CharField(
+        max_length=25,
+        help_text=_('Nombre del centro de gasto.')
+    )
+    codigo = models.CharField(
+        max_length=50,
+        help_text=_('Codigo del centro de gasto dentro de la UGR.')
     )
