@@ -59,8 +59,8 @@
           <!-- Barra de busqueda -->
           {% block busqueda %}
           <ul class="navbar-nav">
-            <li class="nav-item"><a class="btn btn-primary mr-2" href="#" role="button">Anotar</a></li>
-            <li class="nav-item"><a class="btn btn-primary mr-2" href="#" role="button">Autogestión</a></li>
+            <li class="nav-item"><a class="btn btn-primary mr-2" href="{% url 'anotar' %}" role="button"><i class="fas fa-marker pr-1"></i>Anotar</a></li>
+            <li class="nav-item"><a class="btn btn-primary mr-2" href="{% url 'autogestion' %}" role="button"><i class="fas fa-dumbbell pr-1"></i>Autogestión</a></li>
           </ul>
           <form class="form-inline my-2 my-lg-0 ml-4">
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">

@@ -113,4 +113,8 @@ def NuevaNota(request):
             'nota': nota
         }
         return render(request, "gestion/nuevanota.html", context)
+
+
 # TODO: Añadir formulario para registro de Notas en modo autogestión
+def AutoGestion(request):
+    pass
