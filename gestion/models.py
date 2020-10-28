@@ -201,7 +201,7 @@ class Pedido(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
-    centro_gasto = models.CharField(
+    centro_gasto = models.ForeignKey(
         'CentroGasto',
         on_delete=models.SET_NULL,
         null=True,
