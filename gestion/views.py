@@ -15,7 +15,10 @@ from django.forms import formset_factory
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from django.views import generic
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import (
+    login_required,
+    #  permission_required
+)
 
 # Create your views here.
 
