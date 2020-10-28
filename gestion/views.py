@@ -60,7 +60,7 @@ class Tablon(generic.ListView):
 # TODO: Añadir vista para tablón Secretario
 class Secretario(LoginRequiredMixin, generic.ListView):
     model = Pedido
-    ordering = ['-fecha']
+    ordering = ['-fecha_creacion']
     paginate_by = 15
     template_name = 'gestion/secretario.html'
 
