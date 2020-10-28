@@ -46,7 +46,7 @@
             <td>{{ articulo.get_estado_display }}</td>
             {% endif %}
             <td>{{ articulo.producto.nombre_fabricante }}</td>
-            <td class="user-select-all">
+            <td class="user-select-all"> <!-- TODO: Usar clipboardjs? -->
               {% if articulo.estado != 'p'%}
               {{ articulo.pedido.codigo }}
               {% else %}
