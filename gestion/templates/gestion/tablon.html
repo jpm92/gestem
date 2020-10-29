@@ -28,8 +28,8 @@
             <th scope="col">Fecha</th>
             <th scope="col">Estado</th>
             <th scope="col">Producto</th>
-            <th scope="col">Pedido</th>
-            <th scope="col">CPM</th>
+            <th scope="col" class="copiable">Pedido</th>
+            <th scope="col" class="copiable">CPM</th>
             <th scope="col">Referencia</th>
             <th scope="col">Fabricante</th>
             <th scope="col">Distribuidor</th>
@@ -108,12 +108,43 @@
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
   {% endblock %}
   <script type="text/javascript">
-    $(document).ready( function () {
+  $(document).ready( function () {
     $('#Tablon').DataTable({
       paging: false,
       searching: false,
       info: false,
     });
-    } );
+  } );
+
+  function indexInParent(node) {
+    var children = node.parentNode.childNodes;
+    var num = 0;
+    for (var i=0; i<children.length; i++) {
+      if (children[i]==node) return num+1;
+      if (children[i].nodeType==1) num++;
+    }
+    return -1;
+  }
+
+  function copy(event) {
+    var target = event.target || event.srcElement;
+    var copyText = target.innerText || target.textContent;
+    navigator.clipboard.writeText(copyText)
+
+    // Seleccionar la celda -> No me interesa por ahora.
+    // var range = document.createRange();
+    // range.selectNode(target);
+    // window.getSelection().removeAllRanges();
+    // window.getSelection().addRange(range);
+  }
+
+  var columnas = document.getElementsByClassName("copiable")
+
+  for (var i=0; i < columnas.length; i++) {
+    var columna = columnas[i];
+    var index = indexInParent(columna);
+    document.querySelectorAll("td:nth-child("+index+")")
+    .forEach(elem => elem.addEventListener("click", copy))
+  }
   </script>
 {% endblock %}
