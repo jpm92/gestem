@@ -5,10 +5,13 @@ from django_select2 import forms as s2forms
 
 
 class ProductoWidget(s2forms.ModelSelect2Widget):
+    """ Widget especial creado con libreria django-select2.
+    Busca según los campos especificados en serach_fields. """
+
     search_fields = [
         "nombre_amistoso__icontains",
         "nombre_fabricante__icontains",
-        "referencia__icontains"
+        "referencia__icontains",
     ]
 
 
@@ -19,7 +22,12 @@ class ArticuloForm(forms.ModelForm):
         model = Articulo
         fields = ['producto', 'unidades']
         widgets = {
-            "producto": ProductoWidget,
+            "producto": ProductoWidget(
+                {'data-language': 'es',
+                 'data-placeholder': 'Busque productos',
+                 'data-width': '100%',
+                 }
+            ),
         }
 
 
