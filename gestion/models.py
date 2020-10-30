@@ -50,6 +50,14 @@ class Producto(models.Model):
         help_text=_('Categoría del producto.')
     )
 
+    # Metadata
+    class Meta:
+        verbose_name = _("Producto")
+        verbose_name_plural = _("Productos")
+
+    def __str__(self):
+        return f'{self.nombre_amistoso} ({self.referencia})'
+
 
 class Fabricante(models.Model):
     """ Este modelo representa al fabricante de cada uno de los productos del
@@ -64,6 +72,13 @@ class Fabricante(models.Model):
         help_text=_('Página web del fabricante.'),
         blank=True
     )
+
+    class Meta:
+        verbose_name = _("Fabricante")
+        verbose_name_plural = _("Fabricantes")
+
+    def __str__(self):
+        return f'{self.nombre}'
 
 
 class Distribuidor(models.Model):
@@ -83,6 +98,13 @@ class Distribuidor(models.Model):
         max_length=40,
         help_text=_('e-mail de contacto.')
     )
+
+    class Meta:
+        verbose_name = _("Distribuidor")
+        verbose_name_plural = _("Distribuidores")
+
+    def __str__(self):
+        return f'{self.nombre}'
 
 
 class Almacen(models.Model):
@@ -106,6 +128,13 @@ class Almacen(models.Model):
         null=True
     )
 
+    class Meta:
+        verbose_name = _("Almacén")
+        verbose_name_plural = _("Almacenes")
+
+    def __str__(self):
+        return f'{self.nombre}'
+
 
 class Entrega(models.Model):
     """ Este modelo representa las posibles direcciones a las que puede ser
@@ -120,6 +149,13 @@ class Entrega(models.Model):
     direccion = models.TextField(
         help_text=_('Dirección completa con instrucciones de entrega.')
     )
+
+    class Meta:
+        verbose_name = _("Dirección de entrega")
+        verbose_name_plural = _("Direcciones de entrega")
+
+    def __str__(self):
+        return f'{self.nombre}'
 
 
 class Articulo(models.Model):
@@ -155,6 +191,18 @@ class Articulo(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+
+    class Meta:
+        verbose_name = _("Artículo")
+        verbose_name_plural = _("Artículos")
+
+    def __str__(self):
+        producto = self.producto.nombre_amistoso
+        unidades = self.unidades
+        if unidades > 1:
+            return f'{producto} ({unidades}uds)'
+        else:
+            return f'{producto} ({unidades}ud)'
 
 
 class Pedido(models.Model):
@@ -208,6 +256,13 @@ class Pedido(models.Model):
         blank=True
     )
 
+    class Meta:
+        verbose_name = _("Pedido")
+        verbose_name_plural = _("Pedidos")
+
+    def __str__(self):
+        return f'{self.codigo}'
+
 
 class Nota(models.Model):
     """ Este modelo representa un conjunto de artículos anotados
@@ -233,6 +288,13 @@ class Nota(models.Model):
         null=True
     )
 
+    class Meta:
+        verbose_name = _("Nota")
+        verbose_name_plural = _("Notas")
+
+    def __str__(self):
+        return f'Nota nº{self.pk}'
+
 
 class CentroGasto(models.Model):
     """ Este modelo representa a un centro de gasto al cual cargar el
@@ -246,3 +308,10 @@ class CentroGasto(models.Model):
         max_length=50,
         help_text=_('Codigo del centro de gasto dentro de la UGR.')
     )
+
+    class Meta:
+        verbose_name = _("Centro de gasto")
+        verbose_name_plural = _("Centros de gasto")
+
+    def __str__(self):
+        return f'{self.nombre}'
