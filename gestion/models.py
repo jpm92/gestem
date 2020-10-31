@@ -184,7 +184,8 @@ class Articulo(models.Model):
     )
     fecha_recepcion = models.DateTimeField(
         help_text=_('Fecha de recepción de este articulo.'),
-        blank=True
+        blank=True,
+        null=True
     )
     nota = models.ForeignKey(
         'Nota',
