@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from gestion.models import (
     Articulo,
     Pedido,
+    Producto,
 )
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
@@ -10,7 +11,9 @@ from django.contrib.auth.mixins import (
 from gestion.forms import (
     ArticuloForm,
     NotaForm,
+    ProductoForm,
 )
+from django.views.generic.edit import CreateView
 from django.forms import formset_factory
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
@@ -69,6 +72,13 @@ class Secretario(LoginRequiredMixin, generic.ListView):
 # TODO: Añadir vista para Marcar pedido como Lanzado (Secretario)
 # TODO: Añadir vista para recepcionar pedido
 # TODO: Añadir vista para formulario de Productos
+class CrearProducto(CreateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'gestion/producto.html'
+    success_url = "/"
+
+
 # TODO: Añadir vista para registro total
 # REVIEW: Comprobar que funciona la vista para formulario de Notas
 @login_required

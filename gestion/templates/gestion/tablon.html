@@ -39,13 +39,13 @@
         <tbody>
           {% for articulo in articulo_list %}
           <tr>
-            <th scope="row">{{ articulo.nota.fecha|date:"SHORT_DATETIME_FORMAT" }}</th>
+            <td>{{ articulo.nota.fecha|date:"SHORT_DATETIME_FORMAT" }}</td>
             {% if articulo.estado == 'i' %}
             <td>{{ articulo.pedido.get_estado_display }}</td>
             {% else %}
             <td>{{ articulo.get_estado_display }}</td>
             {% endif %}
-            <td>{{ articulo.producto.nombre_fabricante }}</td>
+            <th scope="row">{{ articulo.producto.nombre_fabricante }}</th>
             <td class="user-select-all"> <!-- TODO: Usar clipboardjs? -->
               {% if articulo.estado != 'p'%}
               {{ articulo.pedido.codigo }}
