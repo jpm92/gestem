@@ -1,6 +1,6 @@
 """ Este modulo contiene los formularios necesarios en la app gestion. """
 from django import forms
-from .models import Articulo, Nota
+from .models import Articulo, Nota, Producto
 from django_select2 import forms as s2forms
 
 
@@ -39,7 +39,21 @@ class NotaForm(forms.ModelForm):
         model = Nota
         fields = ['entrega']
     # direccion = forms.ForeignKey blablabla -> modelo Entrega
+
+
 # TODO: Formulario para nuevo Producto
+class ProductoForm(forms.ModelForm):
+    """ . """
+    def __init__(self, *args, **kwargs):
+        super(ProductoForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs = {
+                'class': 'form-control'
+            }
+
+    class Meta:
+        model = Producto
+        fields = "__all__"
 # TODO: Formulario para articulos (Pedido) en modo autogestion
 # TODO: Formulario para asignar CPM
 # TODO: Formulario para Marcar Pedido Realizado

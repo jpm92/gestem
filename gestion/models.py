@@ -9,13 +9,15 @@ class Producto(models.Model):
 
     nombre_amistoso = models.CharField(
         max_length=40,
-        help_text=_('Nombre amigable del producto.')
+        help_text=_('Nombre corto para identificarlo facilmente.'),
+        verbose_name=_('Pseudónimo')
     )
     nombre_fabricante = models.CharField(
         max_length=60,
         help_text=_(
-            'Nombre real del producto, tal como lo conoce el fabricante.'
-        )
+            'Nombre que le da al producto el fabricante.'
+        ),
+        verbose_name=_('Nombre real')
     )
     fabricante = models.ForeignKey(
         'Fabricante',
@@ -31,7 +33,8 @@ class Producto(models.Model):
         'Distribuidor',
         on_delete=models.SET_NULL,
         blank=True,
-        null=True
+        null=True,
+        help_text=_('Empresa que suministra este producto.')
     )
     distribuidores = None  # QUESTION: ¿Es necesario un m2m o ignoro?
     CATEGORIAS = [
@@ -47,7 +50,8 @@ class Producto(models.Model):
     categoria = models.CharField(
         max_length=1,
         choices=CATEGORIAS,
-        help_text=_('Categoría del producto.')
+        help_text=_('Categoría del producto.'),
+        blank=True
     )
 
     # Metadata
