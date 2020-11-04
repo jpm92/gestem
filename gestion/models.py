@@ -313,6 +313,10 @@ class CentroGasto(models.Model):
         max_length=50,
         help_text=_('Codigo del centro de gasto dentro de la UGR.')
     )
+    pertenencia_ugr = models.BooleanField(
+        blank=True,
+        help_text=_('¿Centro de gasto de la UGR? (Si/No)')
+    )
 
     class Meta:
         verbose_name = _("Centro de gasto")
