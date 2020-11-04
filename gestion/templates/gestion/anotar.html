@@ -1,28 +1,47 @@
 {% extends "base_generic.html" %}
+{% load static %}
+
 {% block extracss %}
   {{ articulos.media.css }}
 {% endblock %}
+
 {% block titulo %}Nueva nota | PEDIDOS TERSTEM{% endblock %}
 
 {% block contenido %}
-<form method="POST">
+<div id="empty-form">
+  {{ articulos.empty_form.as_p }}
+</div>
+<form id="formulario-dinamico" method="POST">
   {% csrf_token %}
   {{ articulos.management_form }}
-    {% for articulo in articulos %}
-        {{ articulo.as_p }}
-    {% endfor %}
+  {% for articulo in articulos %}
+  <div id="dinamico" class="form-group unidad">
+    {{ articulo.as_p }}
+  </div>
+  {% endfor %}
   <div class="form-group">
     {{ nota.as_p }}
   </div>
   <button type="submit" class="btn btn-primary">Anotar</button>
 </form>
 {% endblock %}
+
 {% block jquery %}
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
   crossorigin="anonymous"></script>
 {% endblock %}
+
 {% block extrajs %}
+  <script src="{% static 'gestion/js/jquery.formset.js' %}" type="text/javascript"></script>
+  <script type="text/javascript">
+    $('#dinamico').formset({
+    formTemplate: $('#empty-form').clone(),
+    added: function (row) {
+        row.find('.django-select2').djangoSelect2();
+      }
+    });
+  </script>
   {{ articulos.media.js }}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/es.min.js"
   integrity="sha512-xntXNPHoIOoLxuqmYhDB6MA67yimB0HxKb20FTgBcAO7RUk2jwctNYIkencPjG4hdxde8ee6FHqACJqGYYSiSg=="
