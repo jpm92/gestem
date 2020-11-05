@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+
+{% block titulo %}Autenticación GESTEM{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block busqueda %}{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid bg-light">
+    <div class="row justify-content-center h-100">
+        <div class="col-lg-3 mt-lg-5">
+            <div class="card bg-light mb-3">
+                <div class="card-header text-center"><h5>ACCESO GESTEM</h5></div>
+                <div class="card-body">
+                    <h4 class="card-title">Iniciar sesión</h4>
+                    <!--{% if form.errors %}  Innecesario, ya que bootstrap incluye mensajes de error.
+                        <p class="card-text">Tu usuario y contraseña no coinciden. Prueba de nuevo.</p>
+                    {% endif %} -->
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                            <p class="card-text">Tu cuenta no tiene acceso a esta página. Para continuar,
+                                inicia sesión con una cuenta que tenga acceso.</p>
+                        {% else %}
+                            <p class="card-text">Por favor, inicie sesión para ver esta página.</p>
+                        {% endif %}
+                    {% endif %}
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input class="btn btn-primary btn-sm active" type="submit" value="Acceder">
+                    </form>
+                </div>
+            </div>
+        <p class="text-center mt-2 text-muted">&copy; 2020 Jesús Peña</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
