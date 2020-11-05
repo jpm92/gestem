@@ -1,3 +1,15 @@
 #empty-form {
   display: none;
 }
+
+html, body {
+    height: 100%;
+}
+
+.asteriskField {
+    display: none;
+}
+
+.select2-container .select2-selection--single {
+    height: calc(2.25rem + 2px);
+}
