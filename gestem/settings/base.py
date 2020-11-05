@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestion',
     'django_select2',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -112,3 +113,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Plantilla de Crispy Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Redireccion tras login
+LOGIN_REDIRECT_URL = '/'
