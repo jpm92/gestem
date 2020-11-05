@@ -117,5 +117,6 @@ STATIC_URL = '/static/'
 # Plantilla de Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# Redireccion tras login
+# Configuraciones necesarias para Login.
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = "/cuentas/login"

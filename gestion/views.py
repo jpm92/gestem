@@ -27,7 +27,7 @@ from django.contrib.auth.decorators import (
 
 
 # REVIEW: Comprobar que funciona Tablon ListView
-class Tablon(generic.ListView):
+class Tablon(LoginRequiredMixin, generic.ListView):
     model = Articulo
     paginate_by = 15
     template_name = 'gestion/tablon.html'
@@ -72,7 +72,7 @@ class Secretario(LoginRequiredMixin, generic.ListView):
 # TODO: Añadir vista para Marcar pedido como Lanzado (Secretario)
 # TODO: Añadir vista para recepcionar pedido
 # TODO: Añadir vista para formulario de Productos
-class CrearProducto(CreateView):
+class CrearProducto(LoginRequiredMixin, CreateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'gestion/producto.html'
