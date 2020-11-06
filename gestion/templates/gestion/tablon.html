@@ -29,6 +29,21 @@
           </p>
         </div>
       </div>
+      <div class="card mb-2 mb-xl-1 mt-xl-4 shadow-sm">
+        <div class="card-header text-center">
+          <strong>LEYENDA</strong>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <a href="" class="btn btn-success disabled mr-1 p-1"
+                role="button" aria-pressed="true"><i class="far fa-check-circle"></i></a>Recepcionar
+          </p>
+          <p class="card-text">
+            <a href="" class="btn btn-warning disabled mr-1 p-1"
+                role="button" aria-pressed="true"><i class="fas fa-exclamation-circle"></i></a>Reclamar
+          </p>
+        </div>
+      </div>
     </div>
     <div class="col-xl-10">
       <table id="tablon" class="table table-striped table-hover table-sm table-responsive-lg">
@@ -43,6 +58,7 @@
             <th scope="col">Fabricante</th>
             <th scope="col">Distribuidor</th>
             <th scope="col">Unidades</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -79,6 +95,12 @@
               {% endif %}
             </td>
             <td>{{ articulo.unidades }}</td>
+            <td>
+              <a href="{% url 'recepcion' articulo.pk %}" class="btn btn-success active p-1"
+                  role="button" aria-pressed="true"><i class="far fa-check-circle"></i></a>
+              <a href="{% url 'reclamar' articulo.pk %}" class="btn btn-warning active p-1"
+                  role="button" aria-pressed="true"><i class="fas fa-exclamation-circle"></i></a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -99,9 +121,10 @@
               <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
             </a>
           </li>
+          <!-- Leyenda -->
         </ul>
       </nav>
-      <!-- <Paginación bootstrap/> -->
+      <!-- </Paginación bootstrap> -->
     </div>
   </div>
   {% else %}
@@ -109,14 +132,17 @@
     ¡Vaya! Parece que no hay nada que mostrar...
   </div>
   {% endif %}
-  {% block extrajs %}
-    <!-- JS necesario para Datatables. Cargamos otra version de jQuery, ya que
-    Datatables no reconoce la libreria jQuery de bootstrap. -->
+  {% block jquery %}
+    <!-- jQuery especifico para DataTables, ya que no reconoce el de bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  {% endblock %}
+  {% block extrajs %}
+    <!-- JS necesario para Datatables. -->
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/datetime-moment.js"></script>
+    <!-- JS para copiar codigos con un click -->
     <script src="{% static 'gestion/js/copiable.js' %}"></script>
   {% endblock %}
   <script type="text/javascript">
