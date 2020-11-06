@@ -36,7 +36,7 @@ class Producto(models.Model):
         null=True,
         help_text=_('Empresa que suministra este producto.')
     )
-    distribuidores = None  # QUESTION: ¿Es necesario un m2m o ignoro?
+    # distribuidores = None  QUESTION: ¿Es necesario? Ignorar por ahora.
     CATEGORIAS = [
         ('a', _('Cultivo celular')),
         ('b', _('Kits viabilidad')),
@@ -60,7 +60,7 @@ class Producto(models.Model):
         verbose_name_plural = _("Productos")
 
     def __str__(self):
-        return f'{self.nombre_amistoso} ({self.referencia})'
+        return f'{self.nombre_amistoso} ({self.fabricante}: {self.referencia})'
 
 
 class Fabricante(models.Model):
