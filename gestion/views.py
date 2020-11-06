@@ -70,13 +70,31 @@ class Secretario(LoginRequiredMixin, generic.ListView):
 
 # TODO: Añadir vista para Añadir CPM (Secretario)
 # TODO: Añadir vista para Marcar pedido como Lanzado (Secretario)
-# TODO: Añadir vista para recepcionar pedido
-# TODO: Añadir vista para formulario de Productos
+def Recepcion(request):
+    """ Esta vista se encarga de marcar articulos como recepcionados. """
+    # TODO: Implementar vista para recepcionar articulo
+    pass
+
+
+def Reclamar(request):
+    """ Esta vista se encarga de enviar un e-mail reclamando un articulo
+    que aun no ha sido recibido. """
+    # TODO: Implementar vista reclamacion
+    pass
+
+
 class CrearProducto(LoginRequiredMixin, CreateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'gestion/producto.html'
     success_url = "/"
+
+
+class ListaProductos(LoginRequiredMixin, generic.ListView):
+    """ Esta vista se encarga de mostrar la lista de productos disponibles
+    en la base de datos. """
+    # TODO: Implementar vista para Lista de Productos.
+    pass
 
 
 # TODO: Añadir vista para registro total
