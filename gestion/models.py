@@ -186,13 +186,23 @@ class Articulo(models.Model):
         default='p',
         help_text=_('Estado de este articulo.')
     )
+    nota = models.ForeignKey(
+        'Nota',
+        on_delete=models.SET_NULL,
+        null=True
+    )
     fecha_recepcion = models.DateTimeField(
         help_text=_('Fecha de recepción de este articulo.'),
         blank=True,
         null=True
     )
-    nota = models.ForeignKey(
-        'Nota',
+    usuario_recepcion = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    almacen = models.ForeignKey(
+        Almacen,
         on_delete=models.SET_NULL,
         null=True
     )
