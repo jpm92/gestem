@@ -334,3 +334,21 @@ class CentroGasto(models.Model):
 
     def __str__(self):
         return f'{self.nombre}'
+
+
+class PerfilExtendido(models.Model):
+    """ En este modelo se almacenará información de los usuarios no
+    relacionada con temas de autenticación. """
+
+    usuario = models.OneToOneField(
+        User,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    telegram_id = models.CharField(
+        max_length=9,
+        blank=True
+    )
+    correo = models.BooleanField(
+        default=False
+    )
