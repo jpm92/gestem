@@ -13,3 +13,11 @@ html, body {
 .select2-container .select2-selection--single {
     height: calc(2.25rem + 2px);
 }
+
+#entrega select {
+  width: 15em;
+}
+
+hr {
+  border-top: 2px solid gray;
+}

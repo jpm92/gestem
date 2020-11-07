@@ -1,5 +1,6 @@
 {% extends "base_generic.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block extracss %}
   {{ articulos.media.css }}
@@ -8,21 +9,28 @@
 {% block titulo %}Nueva nota | PEDIDOS TERSTEM{% endblock %}
 
 {% block contenido %}
-<div id="empty-form">
+<div id="empty-form" class="form-group border rounded p-2">
   {{ articulos.empty_form.as_p }}
 </div>
-<form id="formulario-dinamico" method="POST">
+<form id="formulario-dinamico" class="row bg-light" method="POST">
   {% csrf_token %}
   {{ articulos.management_form }}
-  {% for articulo in articulos %}
-  <div id="dinamico" class="form-group unidad">
-    {{ articulo.as_p }}
+  <div class="col-xl-6">
+    {% for articulo in articulos %}
+    <div id="dinamico" class="form-group border rounded p-2 mt-2">
+      {{ articulo.as_p }}
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-  <div class="form-group">
-    {{ nota.as_p }}
+  <div class="col-xl-6">
+  <hr class="d-xl-none"/>
+    <div class="form-group mt-2">
+      <div id="entrega">
+        {{ nota|crispy }}
+        <button type="submit" class="btn btn-success pt-2 w-75 font-weight-bolder"><i class="fas fa-paper-plane pr-1"></i>Enviar</button>
+      </div>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">Anotar</button>
 </form>
 {% endblock %}
 
