@@ -324,6 +324,7 @@ class CentroGasto(models.Model):
         help_text=_('Codigo del centro de gasto dentro de la UGR.')
     )
     pertenencia_ugr = models.BooleanField(
+        default=True,
         blank=True,
         help_text=_('¿Centro de gasto de la UGR? (Si/No)')
     )
