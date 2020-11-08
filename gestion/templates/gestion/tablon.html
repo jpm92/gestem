@@ -33,8 +33,8 @@
       <div class="card mb-2 mb-xl-1 mt-xl-4 shadow-sm text-center">
         <div class="card-body">
           <p class="card-text">
-            <a href="" class="btn btn-primary w-75" role="button">Cambiar contraseña</a>
-            <a href="" class="btn btn-primary mt-1 w-75" role="button">Cerrar sesión</a>
+            <a href="" class="btn btn-primary w-75" role="button"><i class="fas fa-key pr-1"></i>Contraseña</a>
+            <a href="" class="btn btn-primary mt-1 w-75" role="button"><i class="fas fa-sign-out-alt pr-1"></i>Cerrar sesión</a>
           </p>
         </div>
       </div>
@@ -90,7 +90,7 @@
             </td>
             <td>{{ articulo.unidades }}</td>
             <td>
-              <a href="{% url 'recepcion' articulo.pk %}" class="btn btn-success active p-1"
+              <a href="{% url 'recepcion' articulo.pk %}" class="btn btn-success active py-1 px-2"
                   role="button" aria-pressed="true"><i class="far fa-check-circle"></i></a>
               <a href="{% url 'reclamar' articulo.pk %}" class="btn btn-warning active p-1"
                   role="button" aria-pressed="true"><i class="fas fa-exclamation-circle"></i></a>
@@ -116,7 +116,7 @@
             </a>
           </li>
           <div id="leyenda" class="pl-2">
-            <span>Leyenda:</span>
+            <span class="pr-1">Leyenda:</span>
             <a href="" class="btn btn-success btn-sm disabled mr-1 p-1"
                 role="button" aria-pressed="true"><i class="far fa-check-circle pr-1"></i>Recepcionar</a>
             <a href="" class="btn btn-sm btn-warning disabled mx-1 p-1"
