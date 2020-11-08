@@ -15,7 +15,7 @@ class Producto(models.Model):
     nombre_fabricante = models.CharField(
         max_length=60,
         help_text=_(
-            'Nombre que le da al producto el fabricante.'
+            'Nombre largo que le da el fabricante al producto.'
         ),
         verbose_name=_('Nombre real')
     )
@@ -28,6 +28,11 @@ class Producto(models.Model):
     referencia = models.CharField(
         max_length=25,
         help_text=_('Referencia del fabricante.')
+    )
+    formato = models.CharField(
+        max_length=25,
+        help_text=_('Formato del producto (ej. c/50, b/100, etc.)'),
+        blank=True
     )
     distribuidor = models.ForeignKey(
         'Distribuidor',
@@ -253,7 +258,7 @@ class Pedido(models.Model):
         ('s', _('Proforma solicitada.')),
         ('c', _('CPM solicitado.')),
         ('v', _('Para validar.')),
-        ('p', _('Pedido realizado.')),  # TODO: Comentar a Isabel.
+        ('p', _('Pedido realizado.')),
         ('r', _('Recibido.'))
     ]
     estado = models.CharField(
