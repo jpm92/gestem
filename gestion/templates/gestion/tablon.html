@@ -33,7 +33,7 @@
       <div class="card mb-2 mb-xl-1 mt-xl-4 shadow-sm text-center">
         <div class="card-body">
           <p class="card-text">
-            <a href="" class="btn btn-primary w-75" role="button"><i class="fas fa-key pr-1"></i>Contraseña</a>
+            <a href="" class="btn btn-primary w-75" role="button"><i class="fas fa-user-edit mr-1"></i>Contraseña</a>
             <a href="" class="btn btn-primary mt-1 w-75" role="button"><i class="fas fa-sign-out-alt pr-1"></i>Cerrar sesión</a>
           </p>
         </div>
@@ -64,8 +64,15 @@
             {% else %}
             <td>{{ articulo.get_estado_display }}</td>
             {% endif %}
-            <th scope="row">{{ articulo.producto.nombre_fabricante }}</th>
-            <td class="user-select-all"> <!-- TODO: Usar clipboardjs? -->
+            <th scope="row">
+              {{ articulo.producto.nombre_fabricante }}
+              <!-- {% if articulo.atrasado %} TODO: Implementar meth:atrasado
+                <span class="badge badge-pill badge-info">
+                  <i class="fas fa-clock ml-1"></i>
+                </span>
+              {% endif %} -->
+            </th>
+            <td class="user-select-all"> <!-- QUESTION: Usar clipboardjs? -->
               {% if articulo.estado != 'p'%}
               {{ articulo.pedido.codigo }}
               {% else %}
@@ -93,7 +100,7 @@
               <a href="{% url 'recepcion' articulo.pk %}" class="btn btn-success active py-1 px-2"
                   role="button" aria-pressed="true"><i class="far fa-check-circle"></i></a>
               <a href="{% url 'reclamar' articulo.pk %}" class="btn btn-warning active p-1"
-                  role="button" aria-pressed="true"><i class="fas fa-exclamation-circle"></i></a>
+                  role="button" aria-pressed="true"><i class="fas fa-bell"></i></a>
             </td>
           </tr>
           {% endfor %}
@@ -118,9 +125,11 @@
           <div id="leyenda" class="pl-2">
             <span class="pr-1">Leyenda:</span>
             <a href="" class="btn btn-success btn-sm disabled mr-1 p-1"
-                role="button" aria-pressed="true"><i class="far fa-check-circle pr-1"></i>Recepcionar</a>
+                role="button" aria-pressed="true"><i class="far fa-check-circle mr-1"></i>Recepcionar</a>
             <a href="" class="btn btn-sm btn-warning disabled mx-1 p-1"
-                role="button" aria-pressed="true"><i class="fas fa-exclamation-circle pr-1"></i>Reclamar</a>
+                role="button" aria-pressed="true"><i class="fas fa-bell mr-1"></i>Reclamar</a>
+            <a href="" class="btn btn-sm btn-info disabled mx-1 p-1"
+                role="button" aria-pressed="true"><i class="fas fa-clock mr-1"></i>Atrasado</a>
           </div>
           <!-- Leyenda -->
         </ul>
@@ -147,14 +156,14 @@
     <script src="{% static 'gestion/js/copiable.js' %}"></script>
   {% endblock %}
   <script type="text/javascript">
-  $(document).ready( function () {
-    $.fn.dataTable.moment( 'DD/MM/YYYY HH:mm' );
-    $('#tablon').DataTable({
-      order: [ 0, 'desc' ],
-      paging: false,
-      searching: false,
-      info: false,
-    });
-  } );
+    $(document).ready( function () {
+      $.fn.dataTable.moment( 'DD/MM/YYYY HH:mm' );
+      $('#tablon').DataTable({
+        order: [ 0, 'desc' ],
+        paging: false,
+        searching: false,
+        info: false,
+      });
+    } );
   </script>
 {% endblock %}
