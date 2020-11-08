@@ -219,6 +219,12 @@ class Articulo(models.Model):
         else:
             return f'{producto} ({unidades}ud)'
 
+    def atrasado(self):
+        """ Método para marcar un articulo como "con retraso" para
+        asi notificar al usuario en su tablón que o bien lo recepcione o bien
+        lo reclame. """
+        pass  # TODO
+
 
 class Pedido(models.Model):
     """ Este modelo representa un pedido en firme a un distribuidor. Los
