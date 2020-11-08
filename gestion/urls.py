@@ -9,7 +9,7 @@ urlpatterns = [
     path('secretaria/', views.Secretario.as_view(), name='secretaria'),
     path('anotar/', views.NuevaNota, name='anotar'),
     path('autogestion/', views.AutoGestion, name='autogestion'),
-    path('producto/', views.CrearProducto.as_view(), name='producto'),
+    path('producto/crear', views.CrearProducto.as_view(), name='nproducto'),
     path('cuentas/', include('django.contrib.auth.urls')),
     path('articulo/<int:pk>/recepcion/', views.Recepcion, name='recepcion'),
     path('articulo/<int:pk>/reclamar', views.Reclamar, name='reclamar')
