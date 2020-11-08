@@ -43,7 +43,7 @@ class NotaForm(forms.ModelForm):
 
 # TODO: Formulario para nuevo Producto
 class ProductoForm(forms.ModelForm):
-    """ . """
+    """ Formulario para añadir productos a la base de datos. """
     def __init__(self, *args, **kwargs):
         super(ProductoForm, self).__init__(*args, **kwargs)
         for field in self.fields:
