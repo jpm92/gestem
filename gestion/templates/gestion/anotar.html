@@ -28,6 +28,9 @@
       <div id="entrega">
         {{ nota|crispy }}
         <button type="submit" class="btn btn-success pt-2 font-weight-bolder"><i class="fas fa-paper-plane pr-1"></i>Enviar</button>
+        <span class="ml-2"> <!-- TODO: Dar estilo, esta feisimo -->
+          ¿No encuentras el producto? <a href="{% url 'nproducto' %}" target="_blank">Añádelo<i class="fas fa-plus-square ml-1"></i></a>
+        </span>
       </div>
     </div>
   </div>
