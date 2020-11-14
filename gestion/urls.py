@@ -11,6 +11,6 @@ urlpatterns = [
     path('autogestion/', views.AutoGestion, name='autogestion'),
     path('producto/crear', views.CrearProducto.as_view(), name='nproducto'),
     path('cuentas/', include('django.contrib.auth.urls')),
-    path('articulo/<int:pk>/recepcion/', views.Recepcion, name='recepcion'),
+    path('articulo/<int:pk>/recepcionar/', views.Recepcion, name='recepcion'),
     path('articulo/<int:pk>/reclamar', views.Reclamar, name='reclamar')
 ]
