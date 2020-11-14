@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'gestion',
     'django_select2',
     'crispy_forms',
+    'import_export'
 ]
 
 MIDDLEWARE = [
