@@ -1,0 +1,20 @@
+{% extends 'admin/change_list.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{% static 'gestion/css/admin.css' %}">
+  <script src="https://kit.fontawesome.com/434ec950ab.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block object-tools %}
+    <div>
+        <form action="clasificar/" method="POST">
+            {% csrf_token %}
+            <button type="submit">
+              Clasificar<i class="fas fa-magic"></i>
+            </button>
+        </form>
+    </div>
+    <br />
+    {{ block.super }}
+{% endblock %}
