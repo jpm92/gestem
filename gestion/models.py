@@ -250,7 +250,8 @@ class Pedido(models.Model):
     cpm = models.CharField(
         max_length=13,
         default=_('Pendiente.'),
-        blank=True
+        blank=True,
+        verbose_name=_('CPM')
     )
     fecha_creacion = models.DateTimeField(
         auto_now_add=True,
@@ -300,7 +301,8 @@ class Pedido(models.Model):
         'CentroGasto',
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        verbose_name=_('Centro de gasto')
     )
 
     class Meta:
