@@ -5,7 +5,7 @@
   <!-- CSS especifico de datatables para el estilo a juego con bootstrap -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 {% endblock %}
-{% block header %}Bienvenido a tu tablón, {{ request.user.get_short_name }} <i class="far fa-laugh-beam"></i>{% endblock %}
+{% block header %}Bienvenid@ a tu tablón, {{ request.user.get_short_name }} <i class="far fa-laugh-beam"></i>{% endblock %}
 {% block contenido %}
   {% if articulo_list %}
   <div class="row mt-1">
