@@ -191,6 +191,12 @@ class Articulo(models.Model):
         default='p',
         help_text=_('Estado de este articulo.')
     )
+    pedido = models.ForeignKey(
+        'Pedido',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
     nota = models.ForeignKey(
         'Nota',
         on_delete=models.SET_NULL,
@@ -241,20 +247,34 @@ class Pedido(models.Model):
         max_length=15,
         help_text=_('Código único identificativo del pedido.')
     )
-    fecha_creacion = models.DateTimeField(
-        auto_now_add=True,
-        help_text=_('Fecha de creación del pedido.')
-    )
     cpm = models.CharField(
         max_length=13,
         default=_('Pendiente.'),
         blank=True
     )
+    fecha_creacion = models.DateTimeField(
+        auto_now_add=True,
+        help_text=_('Fecha de creación del pedido.'),
+        null=True
+    )
     fecha_cpm = models.DateTimeField(
         help_text=_('Fecha de asignación de CPM.'),
-        blank=True
+        blank=True,
+        null=True,
+        verbose_name=_('Fecha CPM')
+    )
+    fecha_confirmacion = models.DateTimeField(
+        help_text=_('Fecha de lanzamiento de pedido.'),
+        blank=True,
+        null=True
+    )
+    fecha_cierre = models.DateTimeField(
+        help_text=_('Fecha de finalización del pedido.'),
+        blank=True,
+        null=True
     )
     ESTADOS = [
+        ('a', _('Pendiente.')),
         ('s', _('Proforma solicitada.')),
         ('c', _('CPM solicitado.')),
         ('v', _('Para validar.')),
@@ -263,7 +283,8 @@ class Pedido(models.Model):
     ]
     estado = models.CharField(
         max_length=1,
-        choices=ESTADOS
+        choices=ESTADOS,
+        default='a'
     )
     distribuidor = models.ForeignKey(
         Distribuidor,
