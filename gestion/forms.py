@@ -1,6 +1,6 @@
 """ Este modulo contiene los formularios necesarios en la app gestion. """
 from django import forms
-from .models import Articulo, Nota, Producto
+from .models import Articulo, Nota, Producto, Pedido
 from django_select2 import forms as s2forms
 
 
@@ -39,6 +39,15 @@ class NotaForm(forms.ModelForm):
         model = Nota
         fields = ['entrega']
     # direccion = forms.ForeignKey blablabla -> modelo Entrega
+
+
+class PedidoForm(forms.ModelForm):
+    """ Este formulario se utiliza para crear un pedido directamente con
+    los articulos introducidos por el usuario. """
+
+    class Meta:
+        model = Pedido
+        fields = ['entrega', 'distribuidor']
 
 
 # TODO: Formulario para nuevo Producto
