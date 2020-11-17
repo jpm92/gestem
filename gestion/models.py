@@ -3,6 +3,25 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 
 
+def get_name(self):
+    """
+    Esta función modifica el __str__ del modelo de Usuario de django,
+    permitiendo representar a los usuarios de manera personalizada
+    """
+    if self.first_name:
+        nombre = f'{self.first_name}'
+        if self.last_name:
+            nombre = f'{nombre} '
+            for x in self.last_name.split():
+                nombre = f'{nombre}{x[0]}'
+        return f'{nombre}'
+    else:
+        return self.username
+
+
+User.add_to_class("__str__", get_name)
+
+
 class Producto(models.Model):
     """ Este modelo representa a cada uno de los productos disponibles
     para hacer un pedido en la aplicación. """
