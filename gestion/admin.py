@@ -70,13 +70,17 @@ class ArticuloAdmin(ImportExportModelAdmin):
         """ Este método se ejecuta al pulsar el boton en admin. Itera sobre
         todos los artículos pendientes y los autoincluye en pedidos nuevos. """
 
+        # Obtenemos todos los articulos pendientes de clasificar.
         articulos = Articulo.objects.filter(estado='p')
+
+        # Si no hay ningún pedido pendiente notificamos al usuario.
         if articulos.count() == 0:
             self.message_user(
                 request,
                 _('¡No hay articulos pendientes de procesar!')
                 )
             return redirect('admin:gestion_articulo_changelist')
+        # De lo contrario procedemos a la clasificación.
         else:
             distribuidor = {}
             cuenta = 0
