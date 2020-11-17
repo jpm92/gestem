@@ -242,12 +242,15 @@ class Articulo(models.Model):
         verbose_name_plural = _("Artículos")
 
     def __str__(self):
-        producto = self.producto.nombre_amistoso
-        unidades = self.unidades
-        if unidades > 1:
-            return f'{producto} ({unidades}uds)'
-        else:
-            return f'{producto} ({unidades}ud)'
+        try:
+            producto = self.producto.nombre_amistoso
+            unidades = self.unidades
+            if unidades > 1:
+                return f'{producto} ({unidades}uds)'
+            else:
+                return f'{producto} ({unidades}ud)'
+        except AttributeError:
+            return str(self.pk)
 
     def atrasado(self):
         """ Método para marcar un articulo como "con retraso" para
