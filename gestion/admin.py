@@ -61,10 +61,16 @@ class ArticuloAdmin(ImportExportModelAdmin):
     crear_pedido.short_description = _("Crear pedido")
 
     def fecha(self, obj):
-        return obj.nota.fecha
+        try:
+            return obj.nota.fecha
+        except AttributeError:
+            return f'Objeto {obj.pk}'
 
     def usuario(self, obj):
-        return obj.nota.usuario
+        try:
+            return obj.nota.usuario
+        except AttributeError:
+            return f'Objeto {obj.pk}'
 
     def magia(self, request):
         """ Este método se ejecuta al pulsar el boton en admin. Itera sobre
