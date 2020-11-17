@@ -304,7 +304,8 @@ class Pedido(models.Model):
         ('c', _('CPM solicitado.')),
         ('v', _('Para validar.')),
         ('p', _('Pedido realizado.')),
-        ('r', _('Recibido.'))
+        ('r', _('Recibido.')),
+        ('g', _('Autogestión.'))
     ]
     estado = models.CharField(
         max_length=1,
