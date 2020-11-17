@@ -69,8 +69,49 @@ class ArticuloAdmin(ImportExportModelAdmin):
     def magia(self, request):
         """ Este método se ejecuta al pulsar el boton en admin. Itera sobre
         todos los artículos pendientes y los autoincluye en pedidos nuevos. """
-        self.message_user(request, _('¡Pedidos creados con éxito!'))
-        return redirect('admin:gestion_pedido_changelist')
+
+        articulos = Articulo.objects.filter(estado='p')
+        if articulos.count() == 0:
+            self.message_user(
+                request,
+                _('¡No hay articulos pendientes de procesar!')
+                )
+            return redirect('admin:gestion_articulo_changelist')
+        else:
+            distribuidor = {}
+            cuenta = 0
+
+            for articulo in articulos:
+                dist = articulo.producto.distribuidor
+                if dist not in distribuidor.keys():
+                    distribuidor[dist] = [articulo]
+                else:
+                    distribuidor[dist].append(articulo)
+            for d in distribuidor:
+                entregas = {}
+                for a in distribuidor[d]:
+                    entrega = a.nota.entrega
+                    if entrega not in entregas.keys():
+                        entregas[entrega] = [a]
+                    else:
+                        entregas[entrega].append(a)
+                for e in entregas:
+                    a = entregas[e][0]
+                    p = Pedido.objects.create(
+                        codigo=keygen(),
+                        entrega=a.nota.entrega,
+                        distribuidor=a.producto.distribuidor
+                    )
+                    cuenta += 1
+                    for articulo in entregas[e]:
+                        articulo.pedido = p
+                        articulo.estado = 'i'
+                        articulo.save()
+            self.message_user(
+                request,
+                _(f'¡{cuenta} pedidos creados con éxito!')
+                )
+            return redirect('admin:gestion_pedido_changelist')
 
     def get_urls(self):
         urls = super().get_urls()
@@ -92,7 +133,7 @@ class PedidoAdmin(ImportExportModelAdmin):
     list_filter = ('estado',)
     list_display_links = ('codigo',)
     readonly_fields = ('fecha_creacion', 'fecha_cpm', 'fecha_confirmacion',
-                       'fecha_cierre')
+                       'fecha_cierre', 'codigo')
     fieldsets = (
         (_('Información del pedido'), {
             'fields': ('codigo', 'cpm', 'estado', 'distribuidor', 'entrega',
