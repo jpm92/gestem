@@ -80,29 +80,51 @@ class ArticuloAdmin(ImportExportModelAdmin):
         else:
             distribuidor = {}
             cuenta = 0
-
+            # En este bucle rellenamos el diccionario distribuidor de la
+            # siguiente forma:
+            # distribuidor[distribuidor1] = [lista de articulos distribuidos
+            #                                por distribuidor 1]
+            # distribuidor[distribuidor2] = [lista de articulos distribuidos
+            #                                por distribuidor 2]
+            # etc
             for articulo in articulos:
                 dist = articulo.producto.distribuidor
                 if dist not in distribuidor.keys():
                     distribuidor[dist] = [articulo]
                 else:
                     distribuidor[dist].append(articulo)
+
+            # Ahora iteramos cada distribuidor presente en el diccionario
             for d in distribuidor:
+                # Diccionario en el que almacenaremos sitios de entrega y sus
+                # articulos asociados (en forma de lista)
                 entregas = {}
+                # Iteramos cada articulo presente en la lista de articulos
+                # correspondientes al distribuidor de la iteración.
                 for a in distribuidor[d]:
                     entrega = a.nota.entrega
+                    # Añadimos la entrega al diccionario entrega. Si ya existia
+                    # la clave, el articulo se adjunta a la lista asociada a
+                    # dicha clave, si no, se crea la clave y la lista
                     if entrega not in entregas.keys():
                         entregas[entrega] = [a]
                     else:
                         entregas[entrega].append(a)
+                # Iteramos cada uno de los elementos del diccionario entregas.
                 for e in entregas:
+                    # Accedemos al primer articulo de la lista asociada a la
+                    # clave de esta iteración.
                     a = entregas[e][0]
+                    # Creamos un pedido con los datos del articulo (ya que
+                    # todos los articulos de la lista comparten los datos).
                     p = Pedido.objects.create(
                         codigo=keygen(),
                         entrega=a.nota.entrega,
                         distribuidor=a.producto.distribuidor
                     )
                     cuenta += 1
+                    # Asociamos cada uno de los articulos de la lista con el
+                    # pedido recien creado.
                     for articulo in entregas[e]:
                         articulo.pedido = p
                         articulo.estado = 'i'
