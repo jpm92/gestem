@@ -229,12 +229,14 @@ class Articulo(models.Model):
     usuario_recepcion = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        blank=True
     )
     almacen = models.ForeignKey(
         Almacen,
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        blank=True
     )
 
     class Meta:
