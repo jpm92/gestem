@@ -126,14 +126,15 @@ def NuevaNota(request):
             # uno la nota anterior (que posee informacion común a todos los
             # articulos).
             for articulo_form in articulos_formset:
-                articulo = articulo_form.save(commit=False)
-                articulo.nota = nota
-                articulo.save()
-            messages.success(
-                request,
-                _(f'Nota nº{nota.pk} añadida con éxito.'),
-                extra_tags='alert alert-success'
-            )
+                if articulo_form.cleaned_data != {}:
+                    articulo = articulo_form.save(commit=False)
+                    articulo.nota = nota
+                    articulo.save()
+                messages.success(
+                    request,
+                    _(f'Nota nº{nota.pk} añadida con éxito.'),
+                    extra_tags='alert alert-success'
+                )
             return redirect('/')
 
     else:
@@ -154,7 +155,7 @@ def AutoGestion(request):
         # Instanciamos un objeto de la clase ArticuloFormset y lo populamos con
         # los datos del post request
         articulos_formset = ArticuloFormset(request.POST)
-        # Instanciamos un objeto de la clase EntregaForm y lo populamos con
+        # Instanciamos un objeto de la clase PedidoForm y lo populamos con
         # los datos del post request
         pedido_form = PedidoForm(request.POST)
         # Si los formularios han sido rellenados correctamente:
@@ -167,25 +168,27 @@ def AutoGestion(request):
             pedido.estado = 'g'
             # Escribimos los datos del objeto formulario en la base de datos.
             pedido.save()
+            # Creamos un objeto Nota para relacionarla con los articulos.
             nota = Nota.objects.create(
                 usuario=request.user,
                 entrega=pedido.entrega
             )
             # Ahora iteramos cada uno de los articulos presentes en el
             # formset y los registramos en la base de datos, asignandole a cada
-            # uno la nota anterior (que posee informacion común a todos los
-            # articulos).
+            # uno el pedido anterior (que posee informacion común a todos los
+            # articulos), así como la nota anterior.
             for articulo_form in articulos_formset:
-                articulo = articulo_form.save(commit=False)
-                articulo.pedido = pedido
-                articulo.nota = nota
-                articulo.estado = 'i'
-                articulo.save()
-            messages.success(
-                request,
-                _(f'Pedido nº{pedido.codigo} añadido con éxito.'),
-                extra_tags='alert alert-success'
-            )
+                if articulo_form.cleaned_data != {}:
+                    articulo = articulo_form.save(commit=False)
+                    articulo.pedido = pedido
+                    articulo.nota = nota
+                    articulo.estado = 'i'
+                    articulo.save()
+                messages.success(
+                    request,
+                    _(f'Pedido nº{pedido.codigo} añadido con éxito.'),
+                    extra_tags='alert alert-success'
+                )
             return redirect('/')
 
     else:
