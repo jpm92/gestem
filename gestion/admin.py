@@ -151,6 +151,7 @@ class ArticuloInline(admin.TabularInline):
     model = Articulo
     extra = 0
     autocomplete_fields = ('producto',)
+    readonly_fields = ('fecha_recepcion', 'usuario_recepcion',)
 
 
 class PedidoAdmin(ImportExportModelAdmin):
