@@ -28,6 +28,7 @@ class ProductoAdmin(ImportExportModelAdmin):
     list_display = ('nombre_fabricante', 'fabricante', 'referencia', 'formato',
                     'distribuidor', 'categoria')
     list_filter = ('categoria',)
+    search_fields = ('nombre_fabricante', 'referencia', 'nombre_amistoso')
 
 
 class ArticuloAdmin(ImportExportModelAdmin):
@@ -36,7 +37,10 @@ class ArticuloAdmin(ImportExportModelAdmin):
                     'estado', 'pedido',)
     list_filter = ('estado',)
     list_display_links = ('producto',)
+    autocomplete_fields = ('producto',)
+    list_select_related = ('pedido',)
     actions = ['crear_pedido']
+    readonly_fields = ('fecha_recepcion',)
     change_list_template = "gestion/articulos_admin.html"
 
     def crear_pedido(self, request, queryset):
@@ -79,6 +83,7 @@ class ArticuloAdmin(ImportExportModelAdmin):
 class ArticuloInline(admin.TabularInline):
     model = Articulo
     extra = 0
+    autocomplete_fields = ('producto',)
 
 
 class PedidoAdmin(ImportExportModelAdmin):
