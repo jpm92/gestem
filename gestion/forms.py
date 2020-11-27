@@ -63,6 +63,15 @@ class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
         fields = "__all__"
+
+
+class RecepcionForm(forms.ModelForm):
+    """ Este formulario se utiliza para recepcionar articulos recibidos. """
+
+    class Meta:
+        model = Articulo
+        fields = ['almacen']
+
 # TODO: Formulario para articulos (Pedido) en modo autogestion
 # TODO: Formulario para asignar CPM
 # TODO: Formulario para Marcar Pedido Realizado

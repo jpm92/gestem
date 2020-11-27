@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from datetime import datetime
 from gestion.models import (
     Articulo,
     Pedido,
     Producto,
-    Nota
+    Nota,
+    Almacen
 )
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
@@ -13,7 +15,8 @@ from gestion.forms import (
     ArticuloForm,
     NotaForm,
     ProductoForm,
-    PedidoForm
+    PedidoForm,
+    RecepcionForm
 )
 from gestem.aux import keygen
 from django.views.generic.edit import CreateView
@@ -73,11 +76,6 @@ class Secretario(LoginRequiredMixin, generic.ListView):
 
 # TODO: Añadir vista para Añadir CPM (Secretario)
 # TODO: Añadir vista para Marcar pedido como Lanzado (Secretario)
-def Recepcion(request):
-    """ Esta vista se encarga de marcar articulos como recepcionados. """
-    # TODO: Implementar vista para recepcionar articulo
-    pass
-
 
 def Reclamar(request):
     """ Esta vista se encarga de enviar un e-mail reclamando un articulo
@@ -199,3 +197,35 @@ def AutoGestion(request):
             'pedido': pedido,
         }
         return render(request, "gestion/autogestion.html", context)
+
+
+def Recepcion(request, pk):
+
+    instance = get_object_or_404(Articulo, id=pk)
+    if request.method == "POST":
+        form = RecepcionForm(request.POST, instance=instance)
+        if form.is_valid():
+            model_instance = form.save(commit=False)
+            model_instance.usuario_recepcion = request.user
+            model_instance.estado = 'r'
+            model_instance.fecha_recepcion = datetime.now()
+            model_instance.save(
+                update_fields=[
+                    'usuario_recepcion',
+                    'almacen',
+                    'fecha_recepcion',
+                    'estado',
+                ]
+            )
+            # model_instance.proforma.concluir() TODO
+            return redirect('/')
+    else:
+        form = RecepcionForm()
+        form.fields["almacen"].queryset = Almacen.objects.filter(
+            lugar=instance.pedido.entrega
+        )
+        return render(
+            request,
+            "gestion/recepcion.html",
+            {'form': form}
+        )
