@@ -10,6 +10,7 @@ def get_name(self):
     """
     if self.first_name:
         nombre = f'{self.first_name}'
+        nombre = nombre.replace(" ", "")
         if self.last_name:
             nombre = f'{nombre} '
             for x in self.last_name.split():
