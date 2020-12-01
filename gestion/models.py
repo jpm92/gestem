@@ -197,6 +197,11 @@ class Articulo(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+    borrador = models.ForeignKey(
+        'Borrador',
+        on_delete=models.SET_NULL,
+        null=True
+    )
     unidades = models.IntegerField(
         default=1
     )
@@ -414,3 +419,56 @@ class PerfilExtendido(models.Model):
     correo = models.BooleanField(
         default=False
     )
+
+
+class Borrador(models.Model):
+    """ Este modelo representa un borrador de pedido. Se utiliza para
+    guardar pedidos que se realicen muy a menudo, de manera que no haya que
+    crearlos manualmente cada vez. Simplemente se acude al borrador
+    y se lanza el pedido. """
+
+    nombre = models.CharField(
+        max_length=15,
+        help_text=_('Nombre para identificar al borrador.')
+    )
+    productos = models.ManyToManyField(
+        Producto,
+        through=Articulo,
+    )
+    distribuidor = models.ForeignKey(
+        Distribuidor,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    entrega = models.ForeignKey(
+        Entrega,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    OPCIONES = [
+        ('s', _('Semanal')),
+        ('m', _('Mensual')),
+        ('a', _('Anual')),
+        ('q', _('15 dias')),
+        ('n', _('Ninguna')),
+    ]
+    periodico = models.CharField(
+        max_length=1,
+        choices=OPCIONES,
+        default='n',
+        verbose_name=_('Periodicidad')
+    )
+    # centro_gasto = models.ForeignKey(
+    #     'CentroGasto',
+    #     on_delete=models.SET_NULL,
+    #     null=True,
+    #     blank=True,
+    #     verbose_name=_('Centro de gasto')
+    # )
+
+    class Meta:
+        verbose_name = _("Borrador")
+        verbose_name_plural = _("Borradores")
+
+    def __str__(self):
+        return f'{self.nombre}'

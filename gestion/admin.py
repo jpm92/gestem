@@ -16,7 +16,8 @@ from gestion.models import (
     Fabricante,
     Distribuidor,
     Nota,
-    PerfilExtendido
+    PerfilExtendido,
+    Borrador
 )
 
 # Register your models here.
@@ -186,13 +187,26 @@ class PedidoAdmin(ImportExportModelAdmin):
     narticulos.short_description = _("nº articulos")
 
 
+# Creamos un inline para poder modificar los campos añadidos al perfil User.
 class ExtendidoInLine(admin.TabularInline):
     model = PerfilExtendido
     can_delete = False
 
 
+# Añadimos el inline al modelo User de Admin
 class UserAdmin(BaseUserAdmin):
     inlines = (ExtendidoInLine,)
+
+
+class ArticuloBInline(admin.TabularInline):
+    model = Borrador.productos.through
+    extra = 0
+    fields = ('producto', 'unidades')
+    autocomplete_fields = ('producto',)
+
+
+class BorradorAdmin(ImportExportModelAdmin):
+    inlines = (ArticuloBInline,)
 
 
 admin.site.register(Producto, ProductoAdmin)
@@ -206,3 +220,4 @@ admin.site.register(Distribuidor)
 admin.site.register(Nota)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.register(Borrador, BorradorAdmin)
