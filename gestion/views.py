@@ -16,10 +16,11 @@ from gestion.forms import (
     NotaForm,
     ProductoForm,
     PedidoForm,
-    RecepcionForm
+    RecepcionForm,
+    CPMForm,
 )
 from gestem.aux import keygen
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.forms import formset_factory
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
@@ -72,10 +73,42 @@ class Secretario(LoginRequiredMixin, generic.ListView):
     ordering = ['-fecha_creacion']
     paginate_by = 15
     template_name = 'gestion/secretario.html'
+    # Escluimos los pedidos de centros de gasto ajenos a la UGR, ya que no
+    # les interesa a la secretaría.
+    queryset = Pedido.objects.exclude(centro_gasto__pertenencia_ugr=False)
 
 
 # TODO: Añadir vista para Añadir CPM (Secretario)
+def CPM(request, pk):
+    """ . """
+
+    instancia = get_object_or_404(Pedido, id=pk)
+
+    if request.method == "POST":
+        form = CPMForm(request.POST, instance=instancia)
+        if form.is_valid():
+            model_instance = form.save(commit=False)
+            model_instance.estado = 'v'
+            model_instance.fecha_cpm = datetime.now()
+            model_instance.save(update_fields=['estado', 'fecha_cpm', 'cpm'])
+            return redirect('secretaria')
+    else:
+        pre_data = {'cpm': instancia.cpm}
+        form = CPMForm(pre_data)
+        return render(
+            request,
+            "gestion/cpm.html",
+            {'form': form, 'proforma': instancia}
+        )
+
+
 # TODO: Añadir vista para Marcar pedido como Lanzado (Secretario)
+def Confirmar(request, pk):
+    pedido = get_object_or_404(Pedido, id=pk)
+    pedido.estado = 'p'
+    pedido.save()
+    return redirect('secretaria')
+
 
 def Reclamar(request):
     """ Esta vista se encarga de enviar un e-mail reclamando un articulo

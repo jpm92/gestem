@@ -2,6 +2,7 @@
 from django import forms
 from .models import Articulo, Nota, Producto, Pedido
 from django_select2 import forms as s2forms
+from django.utils.translation import ugettext_lazy as _
 
 
 class ProductoWidget(s2forms.ModelSelect2Widget):
@@ -72,6 +73,19 @@ class RecepcionForm(forms.ModelForm):
         model = Articulo
         fields = ['almacen']
 
-# TODO: Formulario para articulos (Pedido) en modo autogestion
+
 # TODO: Formulario para asignar CPM
+class CPMForm(forms.ModelForm):
+
+    cpm = forms.CharField(
+        required=True, max_length=20,
+        help_text=_('Introduzca el código del CPM asignado a este pedido.'),
+        label=_('Código CPM')
+        )
+
+    class Meta:
+        model = Pedido
+        fields = ['cpm']
+
+
 # TODO: Formulario para Marcar Pedido Realizado
