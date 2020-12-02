@@ -26,5 +26,7 @@ for (var i=0; i < columnas.length; i++) {
   var columna = columnas[i];
   var index = indexInParent(columna);
   document.querySelectorAll("td:nth-child("+index+")")
-  .forEach(elem => elem.addEventListener("click", copy))
+  .forEach(elem => elem.addEventListener("click", copy));
+  document.querySelectorAll("th:nth-child("+index+")")
+  .forEach(elem => elem.addEventListener("click", copy));
 }
