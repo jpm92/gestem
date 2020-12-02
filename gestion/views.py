@@ -20,7 +20,7 @@ from gestion.forms import (
     CPMForm,
 )
 from gestem.aux import keygen
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView
 from django.forms import formset_factory
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
@@ -80,7 +80,8 @@ class Secretario(LoginRequiredMixin, generic.ListView):
 
 # TODO: Añadir vista para Añadir CPM (Secretario)
 def CPM(request, pk):
-    """ . """
+    """ Modifica el CPM de un pedido y actualiza su estado a
+    "Para Validar". """
 
     instancia = get_object_or_404(Pedido, id=pk)
 
@@ -98,7 +99,7 @@ def CPM(request, pk):
         return render(
             request,
             "gestion/cpm.html",
-            {'form': form, 'proforma': instancia}
+            {'form': form, 'pedido': instancia}
         )
 
 

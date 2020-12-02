@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block contenido %}
+<form method="POST" class="pt-2 w-25">
+  {% csrf_token %}
+  {{ form|crispy }}
+  {% if pedido.estado == 'v' %}
+    <button type="submit" class="btn btn-primary">
+      Editar<i class="fas fa-edit"></i>
+    </button>
+  {% else %}
+    <button type="submit" class="btn btn-primary">
+      Asignar<i class="fas fa-edit"></i>
+    </button>
+  {% endif %}
+  <a href="{% url 'secretaria' %}" class="btn btn-primary">Volver<i class="fas fa-undo-alt pl-1"></i></a>
+</form>
+{% endblock %}
