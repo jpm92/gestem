@@ -163,11 +163,11 @@ def NuevaNota(request):
                     articulo = articulo_form.save(commit=False)
                     articulo.nota = nota
                     articulo.save()
-                messages.success(
-                    request,
-                    _(f'Nota nº{nota.pk} añadida con éxito.'),
-                    extra_tags='alert alert-success'
-                )
+                # messages.success(
+                #     request,
+                #     _(f'Nota nº{nota.pk} añadida con éxito.'),
+                #     extra_tags='alert alert-success'
+                # )
             return redirect('/')
 
     else:
