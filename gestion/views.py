@@ -107,6 +107,7 @@ def CPM(request, pk):
 def Confirmar(request, pk):
     pedido = get_object_or_404(Pedido, id=pk)
     pedido.estado = 'p'
+    pedido.fecha_confirmacion = datetime.now()
     pedido.save()
     return redirect('secretaria')
 
