@@ -187,6 +187,31 @@ class PedidoAdmin(ImportExportModelAdmin):
 
     narticulos.short_description = _("nº articulos")
 
+    def solicitar(self, queryset, request):
+        """ Acción para solicitar por e-mail presupuesto para los artículos del
+        pedido al proveedor asignado. """
+
+        usuario = request.user.get_short_name()
+        pedidos = []
+        for pedido in queryset:
+            pedidos.append(pedido)
+            pedido.email(usuario)
+            pedido.estado = 's'
+            pedido.save()
+        if len(pedidos) > 1:
+            self.message_user(
+                        request,
+                        _('Emails enviados correctamente.'),
+                        level='success'
+            )
+        else:
+            self.message_user(
+                        request,
+                        _('Email enviado correctamente.'),
+                        level='success'
+            )
+    solicitar.short_description = _("Enviar correo")
+
 
 # Creamos un inline para poder modificar los campos añadidos al perfil User.
 class ExtendidoInLine(admin.TabularInline):

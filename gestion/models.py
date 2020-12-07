@@ -343,6 +343,9 @@ class Pedido(models.Model):
     def __str__(self):
         return f'{self.codigo}'
 
+    def email(self, usuario):
+        pass  # TODO: Implementar método para solicitar presupuesto por email.
+
 
 class Nota(models.Model):
     """ Este modelo representa un conjunto de artículos anotados
