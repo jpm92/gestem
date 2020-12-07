@@ -167,6 +167,7 @@ class PedidoAdmin(ImportExportModelAdmin):
                     'narticulos', 'distribuidor', 'entrega', 'centro_gasto')
     list_filter = ('estado',)
     list_display_links = ('codigo',)
+    actions = ('solicitar', 'cpm_check')
     readonly_fields = ('fecha_creacion', 'fecha_cpm', 'fecha_confirmacion',
                        'fecha_cierre', 'codigo')
     fieldsets = (
@@ -187,7 +188,7 @@ class PedidoAdmin(ImportExportModelAdmin):
 
     narticulos.short_description = _("nº articulos")
 
-    def solicitar(self, queryset, request):
+    def solicitar(self, request, queryset):
         """ Acción para solicitar por e-mail presupuesto para los artículos del
         pedido al proveedor asignado. """
 
@@ -200,17 +201,31 @@ class PedidoAdmin(ImportExportModelAdmin):
             pedido.save()
         if len(pedidos) > 1:
             self.message_user(
-                        request,
-                        _('Emails enviados correctamente.'),
-                        level='success'
+                request,
+                _('Emails enviados correctamente.'),
+                level='success'
             )
         else:
             self.message_user(
-                        request,
-                        _('Email enviado correctamente.'),
-                        level='success'
+                request,
+                _('Email enviado correctamente.'),
+                level='success'
             )
     solicitar.short_description = _("Enviar correo")
+
+    def cpm_check(self, request, queryset):
+        """ Acción para marcar los pedidos seleccionados como "CPM solicitado",
+        (estado='c'). """
+
+        for pedido in queryset:
+            pedido.estado = 'c'
+            pedido.save()
+        self.message_user(
+            request,
+            _('Pedido(s) marcado con éxito.'),
+            level='success'
+        )
+    cpm_check.short_description = _("CPM Solicitado")
 
 
 # Creamos un inline para poder modificar los campos añadidos al perfil User.
