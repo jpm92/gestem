@@ -1,6 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from datetime import datetime, time
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from gestion.tasks import solicitud_email
+from gestem.aux import keygen
 
 
 def get_name(self):
@@ -343,8 +348,33 @@ class Pedido(models.Model):
     def __str__(self):
         return f'{self.codigo}'
 
-    def email(self, usuario):
-        pass  # TODO: Implementar método para solicitar presupuesto por email.
+    def email(self, usuario=None):
+
+        hora = datetime.now().time()
+        if time(0) <= hora < time(12):
+            saludo = 'Buenos días'
+        elif time(12) <= hora < time(20):
+            saludo = 'Buenas tardes'
+        elif time(20) <= hora <= time(23, 49):
+            saludo = 'Buenas noches'
+        subject = f'[{self.entrega}] SOLICITUD PROFORMA CODIGO {self.codigo}'
+        context = {'proforma': self, 'saludo': saludo}
+        if usuario:
+            context['usuario'] = usuario
+        html_message = render_to_string(
+            'gestion/solicitud_email.html',
+            context
+        )
+        plain_message = strip_tags(html_message)
+        from_email = 'pedidosterstem@ugr.es'
+        to = [self.fabricante.email]
+        solicitud_email.delay(
+            subject,
+            plain_message,
+            from_email,
+            to,
+            html_message
+        )
 
 
 class Nota(models.Model):
@@ -431,7 +461,7 @@ class Borrador(models.Model):
     y se lanza el pedido. """
 
     nombre = models.CharField(
-        max_length=15,
+        max_length=40,
         help_text=_('Nombre para identificar al borrador.')
     )
     productos = models.ManyToManyField(
@@ -475,3 +505,19 @@ class Borrador(models.Model):
 
     def __str__(self):
         return f'{self.nombre}'
+
+    def tramitar(self, solicitar=False):
+        """ Crea un pedido a partir del borrador. Indicar solicitar=True para
+        solicitar un presupuesto para el pedido recien creado. """
+
+        pedido = Pedido.objects.create(
+            codigo=keygen(),
+            distribuidor=self.distribuidor,
+            entrega=self.entrega
+        )
+        for articulo in self.productos:
+            articulo.pk = None
+            articulo.pedido = pedido
+            articulo.save()
+        if solicitar:
+            pedido.email()
