@@ -361,6 +361,8 @@ class Pedido(models.Model):
         context = {'proforma': self, 'saludo': saludo}
         if usuario:
             context['usuario'] = usuario
+            # TODO: Implementar lógica dentro de la plantilla HTML en caso de
+            # que no se incluya usuario.
         html_message = render_to_string(
             'gestion/solicitud_email.html',
             context
