@@ -225,6 +225,7 @@ class Articulo(models.Model):
     pedido = models.ForeignKey(
         'Pedido',
         on_delete=models.SET_NULL,
+        related_name='productos',
         null=True,
         blank=True
     )
@@ -277,7 +278,7 @@ class Pedido(models.Model):
     """ Este modelo representa un pedido en firme a un distribuidor. Los
     articulos (class Articulo) tienen una relacion ManyToOne con este modelo de
     forma que se pueda acceder a los articulos de cada pedido mediante
-    'Pedido.articulo_set.all()'. """
+    'Pedido.productos.all()'. """
 
     codigo = models.CharField(
         max_length=15,

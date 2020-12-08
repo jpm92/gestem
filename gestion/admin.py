@@ -184,7 +184,7 @@ class PedidoAdmin(ImportExportModelAdmin):
     inlines = (ArticuloInline,)
 
     def narticulos(self, obj):
-        return obj.articulo_set.count()
+        return obj.productos.count()
 
     narticulos.short_description = _("nº articulos")
 
