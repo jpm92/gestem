@@ -271,7 +271,7 @@ class Articulo(models.Model):
         """ Método para marcar un articulo como "con retraso" para
         asi notificar al usuario en su tablón que o bien lo recepcione o bien
         lo reclame. """
-        pass  # TODO
+        pass  # TODO: Implementar
 
 
 class Pedido(models.Model):
