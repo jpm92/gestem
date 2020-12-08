@@ -32,7 +32,7 @@
       <div class="card mb-2 mb-xl-1 mt-xl-4 shadow-sm text-center">
         <div class="card-body">
           <p class="card-text">
-            <a href="" class="btn btn-primary w-75" role="button"><i class="fas fa-user-edit mr-1"></i>Contraseña</a>
+            <a href="{% url 'cambiopassword' %}" class="btn btn-primary w-75" role="button"><i class="fas fa-user-edit mr-1"></i>Contraseña</a>
             <a href="" class="btn btn-primary mt-1 w-75" role="button"><i class="fas fa-sign-out-alt pr-1"></i>Cerrar sesión</a>
           </p>
         </div>
@@ -50,7 +50,7 @@
             <th scope="col" class="copiable">CPM</th>
             <th scope="col">Referencia</th>
             <th scope="col">Fabricante</th>
-            <th scope="col">Distribuidor</th>
+            <th scope="col">Distribuidor</th> <!-- TODO: Sustituir por entrega -->
             <th scope="col">Unidades</th>
             <th scope="col">Acciones</th>
           </tr>
@@ -90,7 +90,7 @@
             <td>{{ articulo.producto.fabricante.nombre }}</td>
             <td>
               {% if articulo.pedido %}
-              {{ articulo.pedido.distribuidor.nombre }}
+              {{ articulo.pedido.distribuidor.nombre }} <!-- TODO: Sustituir por entrega -->
               {% else %}
               Pendiente.
               {% endif %}

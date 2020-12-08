@@ -29,6 +29,8 @@ from django.contrib.auth.decorators import (
     login_required,
     #  permission_required
 )
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
@@ -264,3 +266,28 @@ def Recepcion(request, pk):
             "gestion/recepcion.html",
             {'form': form}
         )
+
+
+def cambio_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(
+                request,
+                _('Su contraseña ha sido actualizada correctamente.'),
+                extra_tags='alert alert-success'
+            )
+            return redirect('index')
+        else:
+            messages.error(
+                request,
+                _('Por favor corrija el error indicado debajo.'),
+                extra_tags='alert alert-warning'
+            )
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/cambiar_password.html', {
+        'form': form
+    })
