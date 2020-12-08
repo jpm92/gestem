@@ -248,6 +248,32 @@ class ArticuloBInline(admin.TabularInline):
 
 class BorradorAdmin(ImportExportModelAdmin):
     inlines = (ArticuloBInline,)
+    actions = ('AcTramitar', 'AcTramitarS')
+    list_display = (
+        'nombre',
+        'distribuidor',
+        'entrega',
+        'narticulos',
+        'periodico',
+    )
+
+    def narticulos(self, obj):
+        return obj.productos.count()
+    narticulos.short_description = _("nº articulos")
+
+    def AcTramitar(self, request, queryset):
+        for borrador in queryset:
+            borrador.tramitar(request.user)
+    AcTramitar.short_description = _("Crear pedido")
+
+    def AcTramitarS(self, request, queryset):
+        for borrador in queryset:
+            borrador.tramitar(request.user, solicitar=True)
+    AcTramitarS.short_description = _("Crear pedido y solicitar")
+
+
+class NotaAdmin(ImportExportModelAdmin):
+    inlines = (ArticuloInline,)
 
 
 admin.site.register(Producto, ProductoAdmin)
@@ -258,7 +284,7 @@ admin.site.register(Entrega)
 admin.site.register(Almacen)
 admin.site.register(Fabricante)
 admin.site.register(Distribuidor)
-admin.site.register(Nota)
+admin.site.register(Nota, NotaAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Borrador, BorradorAdmin)
