@@ -506,7 +506,7 @@ class Borrador(models.Model):
     def __str__(self):
         return f'{self.nombre}'
 
-    def tramitar(self, solicitar=False):
+    def tramitar(self, usuario, solicitar=False):
         """ Crea un pedido a partir del borrador. Indicar solicitar=True para
         solicitar un presupuesto para el pedido recien creado. """
 
@@ -515,9 +515,18 @@ class Borrador(models.Model):
             distribuidor=self.distribuidor,
             entrega=self.entrega
         )
-        for articulo in self.productos:
+        nota = Nota.objects.create(
+            usuario=usuario,
+            entrega=self.entrega,
+        )
+        articulos = self.productos.through.objects.filter(
+            borrador=self
+        )
+        for articulo in articulos:
             articulo.pk = None
             articulo.pedido = pedido
+            articulo.nota = nota
+            articulo.borrador = None
             articulo.save()
         if solicitar:
-            pedido.email()
+            pedido.email(usuario=usuario)
