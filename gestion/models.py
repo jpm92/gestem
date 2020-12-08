@@ -205,6 +205,7 @@ class Articulo(models.Model):
     borrador = models.ForeignKey(
         'Borrador',
         on_delete=models.SET_NULL,
+        related_name='articulos',
         null=True
     )
     unidades = models.IntegerField(
@@ -521,10 +522,8 @@ class Borrador(models.Model):
             usuario=usuario,
             entrega=self.entrega,
         )
-        articulos = self.productos.through.objects.filter(
-            borrador=self
-        )
-        for articulo in articulos:
+
+        for articulo in self.articulos.all():
             articulo.pk = None
             articulo.pedido = pedido
             articulo.nota = nota
