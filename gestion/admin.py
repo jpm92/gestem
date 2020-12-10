@@ -21,7 +21,6 @@ from gestion.models import (
 )
 
 # Register your models here.
-# TODO: Registrar modelos en el panel de administración.
 
 
 class ProductoAdmin(ImportExportModelAdmin):
