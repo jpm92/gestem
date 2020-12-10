@@ -193,13 +193,12 @@ class PedidoAdmin(ImportExportModelAdmin):
         pedido al proveedor asignado. """
 
         usuario = request.user.get_short_name()
-        pedidos = []
+
         for pedido in queryset:
-            pedidos.append(pedido)
             pedido.email(usuario)
             pedido.estado = 's'
             pedido.save()
-        if len(pedidos) > 1:
+        if queryset.count() > 1:
             self.message_user(
                 request,
                 _('Emails enviados correctamente.'),
