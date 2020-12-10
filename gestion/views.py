@@ -75,7 +75,7 @@ class Secretario(LoginRequiredMixin, generic.ListView):
     ordering = ['-fecha_creacion']
     paginate_by = 15
     template_name = 'gestion/secretario.html'
-    # Escluimos los pedidos de centros de gasto ajenos a la UGR, ya que no
+    # Excluimos los pedidos de centros de gasto ajenos a la UGR, ya que no
     # les interesa a la secretaría.
     queryset = Pedido.objects.exclude(centro_gasto__pertenencia_ugr=False)
 
@@ -128,14 +128,61 @@ class CrearProducto(LoginRequiredMixin, CreateView):
     success_url = "/"
 
 
+# TODO: Rematar lista de productos, con su búsqueda incluida.
 class ListaProductos(LoginRequiredMixin, generic.ListView):
     """ Esta vista se encarga de mostrar la lista de productos disponibles
     en la base de datos. """
     # TODO: Implementar vista para Lista de Productos.
+    model = Producto
+    ordering = ['-nombre_amistoso']
+    paginate_by = 15
+    template_name = 'gestion/productos.html'
+
+
+# TODO: Añadir vista para registro total de articulos
+class HistorialNotas(LoginRequiredMixin, generic.ListView):
+    model = Articulo
+    ordering = ['-fecha_creacion']
+    paginate_by = 15
+    template_name = 'gestion/notas.html'
+
+
+# TODO: Rematar ListaPedidos
+class HistorialPedidos(LoginRequiredMixin, generic.ListView):
+    model = Pedido
+    ordering = ['-fecha_creacion']
+    paginate_by = 15
+    template_name = 'gestion/pedidos.html'
+
+
+# TODO: Implementar vista en detalle para productos.
+class DetalleProducto(generic.DetailView):
     pass
 
 
-# TODO: Añadir vista para registro total
+# TODO: Implementar vista en detalle para Nota.
+class DetalleNota(generic.DetailView):
+    pass
+
+
+# TODO: Implementar vista en detalle para Artículo.
+class ArticuloDetalle(generic.DetailView):
+    pass
+
+
+# TODO: Implementar vista en detalle de Pedido.
+class PedidoDetalle(generic.DetailView):
+    pass
+
+
+def Busqueda(request):
+    """ Esta vista se encarga de buscar los parámetros introducidos en
+    la barra de búsqueda. """
+    # TODO: Implementar búsqueda según el path donde se ejecute:
+    # if request.path == /pedido/ or /articulo/ etc.
+    pass
+
+
 # REVIEW: Comprobar que funciona la vista para formulario de Notas
 @login_required
 def NuevaNota(request):
