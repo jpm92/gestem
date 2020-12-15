@@ -1,1 +1,73 @@
 <!-- TODO: Diseñar plantilla molona -->
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+    <style type="text/css">
+      .tg  {border-collapse:collapse;border-spacing:0;width: 50%; background-color: #e6e6e6;}
+      .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg .tg-0pky{border-color:inherit;text-align:center;vertical-align:top; border:none;}
+      .tg .tg-0lax{text-align:left;vertical-align:top}
+      .rojo{background-color: #CB2C30;}
+      .codigo{background-color: #FFD000; padding: 4px;border: 2px solid #009430;}
+      #firma{color: #999999;font-style: italic;}
+    </style>
+</head>
+<body>
+  <p>{{ saludo }}, nos gustaría solicitar una factura proforma para los productos listados a continuación.</p>
+  <p>
+    Les rogamos presten atención a la <b>dirección de entrega</b> que se indica, dado
+    que nuestro grupo de investigación está repartido en varios laboratorios separados geográficamente entre sí.
+  </p>
+  <table class="tg">
+    <thead>
+      <tr>
+        <th colspan="2">Solicitud de presupuesto nº <span class="codigo">{{ pedido.codigo }}</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="rojo">
+        <td class="tg-0lax"><b>FACTURACION</b></td>
+        <td class="tg-0lax"><b>ENTREGA</b></td>
+      </tr>
+      <tr>
+        <td class="tg-0lax">Universidad de Granada<br>CIF: Q1818002F<br>Hospital Real, Cuesta del Hospicio s/n 18071 GRANADA<br><b>CENTRO DE GASTO:</b><br>{{ pedido.centro_gasto.codigo }}</td>
+        <td class="tg-0lax">{% autoescape off %}{{ pedido.entrega.html }}{% endautoescape %}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <table class="tg">
+    <thead>
+      <tr class="rojo">
+        <th class="tg-0lax"><b>Producto</b></td>
+        <th class="tg-0lax"><b>Fabricante</b></td>
+        <th class="tg-0lax"><b>Referencia</b></td>
+        <th class="tg-0lax"><b>Unidades</b></td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for articulo in pedido.productos.all %}
+      <tr>
+        <td class="tg-0lax">{{ articulo.producto.nombre_fabricante }}</td>
+        <td class="tg-0lax">{{ articulo.producto.fabricante }}</td>
+        <td class="tg-0lax">{{ articulo.producto.referencia }}</td>
+        <td class="tg-0lax">{{ articulo.unidades }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <p>Un saludo,<br><br>{% if usuario %}{{ usuario }}.{% else %}Grupo TERSTEM{% endif %}</p>
+  <p>---</p>
+  <div id="firma">
+    <p>Grupo de Investigación CTS-963 (J.A. Marchal)</p>
+    <p>Centro de Investigación Biomédica</p>
+    <p>Universidad de Granada<br></p>
+  </div>
+</body>
+</html>
