@@ -178,10 +178,53 @@ class Entrega(models.Model):
 
     nombre = models.CharField(
         max_length=30,
-        help_text=_('Nombre indentificativo de la dirección de entrega.')
+        help_text=_(
+            'Nombre interno indentificativo de la dirección de entrega.'
+        )
+    )
+    centro = models.CharField(
+        max_length=50,
+        help_text=_('Nombre del centro de investigación.'),
+        null=True
+    )
+    laboratorio = models.CharField(
+        max_length=40,
+        help_text=_('Laboratorio, departamento, secretaría, etc.'),
+        null=True
+    )
+    aa = models.CharField(
+        max_length=40,
+        help_text=_('A la atencion de.'),
+        null=True
     )
     direccion = models.TextField(
-        help_text=_('Dirección completa con instrucciones de entrega.')
+        help_text=_('Dirección completa.'),
+        null=True
+    )
+    cp = models.CharField(
+        max_length=5,
+        help_text=_('Código postal.'),
+        null=True
+    )
+    poblacion = models.CharField(
+        max_length=40,
+        help_text=_('Población del código postal.'),
+        null=True
+    )
+    instrucciones = models.TextField(
+        help_text=_('Instrucciones de entrega.'),
+        blank=True,
+        null=True
+    )
+    contacto = models.CharField(
+        max_length=40,
+        blank=True,
+        help_text=_('Datos de contacto.')
+    )
+    horario = models.CharField(
+        max_length=40,
+        blank=True,
+        help_text=_('Horario para entregar paquetes (mañanas, tardes, etc).')
     )
 
     class Meta:
@@ -190,6 +233,24 @@ class Entrega(models.Model):
 
     def __str__(self):
         return f'{self.nombre}'
+
+    def ayuda(self):
+        """ Este método devuelve una cadena con toda la información del
+        sitio de entrega resumida. """
+        pass  # TODO: Implementar meth:ayuda
+
+    def html(self):
+        """ Este método devuelve una cadena html con toda la información
+        del lugar de entrega lista para incluirla en una plantilla. """
+        html = f'<b>{self.centro}</b><br>{self.laboratorio}<br>{self.aa}<br>\
+                {self.direccion}<br>{self.cp} {self.poblacion}<br>ESPAÑA'
+        if self.instrucciones:
+            html += f'<br>{self.instrucciones}'
+        if self.contacto:
+            html += f'<br><b>Contacto:</b> {self.contacto}'
+        if self.horario:
+            html += f'<br><b>Horario:</b> {self.horario}'
+        return html
 
 
 class Articulo(models.Model):
@@ -360,7 +421,7 @@ class Pedido(models.Model):
         elif time(20) <= hora <= time(23, 49):
             saludo = 'Buenas noches'
         subject = f'[{self.entrega}] SOLICITUD PROFORMA CODIGO {self.codigo}'
-        context = {'proforma': self, 'saludo': saludo}
+        context = {'pedido': self, 'saludo': saludo}
         if usuario:
             context['usuario'] = usuario
             # TODO: Implementar lógica dentro de la plantilla HTML en caso de
@@ -371,8 +432,8 @@ class Pedido(models.Model):
         )
         plain_message = strip_tags(html_message)
         from_email = 'pedidosterstem@ugr.es'
-        to = [self.fabricante.email]
-        solicitud_email.delay(
+        to = [self.distribuidor.contacto]
+        solicitud_email(  # .delay() cuando este en prod
             subject,
             plain_message,
             from_email,
