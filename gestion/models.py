@@ -66,7 +66,7 @@ class Producto(models.Model):
         null=True,
         help_text=_('Empresa que suministra este producto.')
     )
-    # distribuidores = None  QUESTION: ¿Es necesario? Ignorar por ahora.
+    # distribuidores = None  IDEA: ¿Es necesario? Ignorar por ahora.
     CATEGORIAS = [
         ('a', _('Cultivo celular')),
         ('b', _('Kits viabilidad')),
