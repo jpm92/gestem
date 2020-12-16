@@ -234,14 +234,25 @@ class Entrega(models.Model):
     def __str__(self):
         return f'{self.nombre}'
 
-    def ayuda(self):
+    def resumen(self):
         """ Este método devuelve una cadena con toda la información del
         sitio de entrega resumida. """
-        pass  # TODO: Implementar meth:ayuda
+
+        dir = f'{self.centro}; {self.laboratorio}, Aa {self.aa};\
+                {self.direccion};{self.cp} {self.poblacion}; ESPAÑA'
+        if self.instrucciones:
+            dir += f'; {self.instrucciones}'
+        if self.contacto:
+            dir += f';Contacto: {self.contacto}'
+        if self.horario:
+            dir += f';Horario: {self.horario}'
+        return dir
 
     def html(self):
-        """ Este método devuelve una cadena html con toda la información
-        del lugar de entrega lista para incluirla en una plantilla. """
+        """ Este método devuelve una cadena en formato html con toda la
+        información del lugar de entrega lista para incluirla en una plantilla.
+        """
+
         html = f'<b>{self.centro}</b><br>{self.laboratorio}<br>{self.aa}<br>\
                 {self.direccion}<br>{self.cp} {self.poblacion}<br>ESPAÑA'
         if self.instrucciones:
