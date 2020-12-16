@@ -433,13 +433,28 @@ class Pedido(models.Model):
         plain_message = strip_tags(html_message)
         from_email = 'pedidosterstem@ugr.es'
         to = [self.distribuidor.contacto]
-        solicitud_email(  # .delay() cuando este en prod
+        solicitud_email(  # TODO: .delay() cuando este en prod
             subject,
             plain_message,
             from_email,
             to,
             html_message
         )
+
+    def concluir(self):
+        """ Este método comprueba si todos los articulos relacionados se
+        encuentran en estado "recibido" para así concluir el pedido marcandolo
+        como "completo". """
+
+        boton = True
+
+        for articulo in self.productos.all():
+            if articulo.estado != 'r':
+                boton = False
+
+        if boton:
+            self.estado = 'r'
+            self.save()
 
 
 class Nota(models.Model):

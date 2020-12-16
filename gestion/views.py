@@ -301,7 +301,7 @@ def Recepcion(request, pk):
                     'estado',
                 ]
             )
-            # model_instance.proforma.concluir() TODO
+            model_instance.pedido.concluir()
             return redirect('/')
     else:
         form = RecepcionForm()
