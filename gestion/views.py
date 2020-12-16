@@ -69,7 +69,7 @@ class Tablon(LoginRequiredMixin, generic.ListView):
         return context
 
 
-# TODO: Añadir vista para tablón Secretario
+# REVIEW: Añadir vista para tablón Secretario
 class Secretario(LoginRequiredMixin, generic.ListView):
     model = Pedido
     ordering = ['-fecha_creacion']
@@ -80,7 +80,7 @@ class Secretario(LoginRequiredMixin, generic.ListView):
     queryset = Pedido.objects.exclude(centro_gasto__pertenencia_ugr=False)
 
 
-# TODO: Añadir vista para Añadir CPM (Secretario)
+# REVIEW: Añadir vista para Añadir CPM (Secretario)
 def CPM(request, pk):
     """ Modifica el CPM de un pedido y actualiza su estado a
     "Para Validar". """
@@ -105,7 +105,7 @@ def CPM(request, pk):
         )
 
 
-# TODO: Añadir vista para Marcar pedido como Lanzado (Secretario)
+# REVIEW: Añadir vista para Marcar pedido como Lanzado (Secretario)
 def Confirmar(request, pk):
     pedido = get_object_or_404(Pedido, id=pk)
     pedido.estado = 'p'
@@ -128,11 +128,10 @@ class CrearProducto(LoginRequiredMixin, CreateView):
     success_url = "/"
 
 
-# TODO: Rematar lista de productos, con su búsqueda incluida.
+# TODO: Rematar lista de productos, con su búsqueda Select 2 incluida.
 class ListaProductos(LoginRequiredMixin, generic.ListView):
     """ Esta vista se encarga de mostrar la lista de productos disponibles
     en la base de datos. """
-    # TODO: Implementar vista para Lista de Productos.
     model = Producto
     ordering = ['-nombre_amistoso']
     paginate_by = 15
@@ -229,7 +228,7 @@ def NuevaNota(request):
         return render(request, "gestion/anotar.html", context)
 
 
-# TODO: Añadir formulario para registro de Notas en modo autogestión
+# REVIEW: Añadir formulario para registro de Notas en modo autogestión
 def AutoGestion(request):
     # Creamos un formset a partir del formulario de Articulo.
     ArticuloFormset = formset_factory(ArticuloForm)

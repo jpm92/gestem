@@ -50,7 +50,7 @@
             <th scope="col" class="copiable">CPM</th>
             <th scope="col">Referencia</th>
             <th scope="col">Fabricante</th>
-            <th scope="col">Distribuidor</th> <!-- TODO: Sustituir por entrega -->
+            <th scope="col">Distribuidor</th> <!-- QUESTION: Sustituir por entrega -->
             <th scope="col">Unidades</th>
             <th scope="col">Acciones</th>
           </tr>
@@ -90,7 +90,7 @@
             <td>{{ articulo.producto.fabricante.nombre }}</td>
             <td>
               {% if articulo.pedido %}
-              {{ articulo.pedido.distribuidor.nombre }} <!-- TODO: Sustituir por entrega -->
+              {{ articulo.pedido.distribuidor.nombre }} <!-- QUESTION: Sustituir por entrega -->
               {% else %}
               Pendiente.
               {% endif %}

@@ -239,7 +239,7 @@ class Entrega(models.Model):
         sitio de entrega resumida. """
 
         dir = f'{self.centro}; {self.laboratorio}, Aa {self.aa};\
-                {self.direccion};{self.cp} {self.poblacion}; ESPAÑA'
+                {self.direccion}; {self.cp} {self.poblacion}; ESPAÑA'
         if self.instrucciones:
             dir += f'; {self.instrucciones}'
         if self.contacto:
@@ -343,7 +343,7 @@ class Articulo(models.Model):
         """ Método para marcar un articulo como "con retraso" para
         asi notificar al usuario en su tablón que o bien lo recepcione o bien
         lo reclame. """
-        pass  # TODO: Implementar
+        pass  # TODO: Implementar meth:atrasado
 
 
 class Pedido(models.Model):
@@ -435,8 +435,7 @@ class Pedido(models.Model):
         context = {'pedido': self, 'saludo': saludo}
         if usuario:
             context['usuario'] = usuario
-            # TODO: Implementar lógica dentro de la plantilla HTML en caso de
-            # que no se incluya usuario.
+
         html_message = render_to_string(
             'gestion/solicitud_email.html',
             context

@@ -51,7 +51,7 @@ class PedidoForm(forms.ModelForm):
         fields = ['entrega', 'distribuidor']
 
 
-# TODO: Formulario para nuevo Producto
+# REVIEW: Formulario para nuevo Producto
 class ProductoForm(forms.ModelForm):
     """ Formulario para añadir productos a la base de datos. """
     def __init__(self, *args, **kwargs):
@@ -74,7 +74,7 @@ class RecepcionForm(forms.ModelForm):
         fields = ['almacen']
 
 
-# TODO: Formulario para asignar CPM
+# REVIEW: Formulario para asignar CPM
 class CPMForm(forms.ModelForm):
 
     cpm = forms.CharField(
