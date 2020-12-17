@@ -16,4 +16,5 @@ urlpatterns = [
     path('articulo/<int:pk>/reclamar', views.Reclamar, name='reclamar'),
     path('pedido/<int:pk>/cpm', views.CPM, name='cpm'),
     path('pedido/<int:pk>/confirmar', views.Confirmar, name='confirmar'),
+    path('historial/notas', views.HistorialNotas.as_view(), name='hnotas'),
 ]

@@ -141,9 +141,11 @@ class ListaProductos(LoginRequiredMixin, generic.ListView):
 # TODO: Añadir vista para registro total de articulos
 class HistorialNotas(LoginRequiredMixin, generic.ListView):
     model = Articulo
-    ordering = ['-fecha_creacion']
     paginate_by = 15
     template_name = 'gestion/notas.html'
+
+    def get_queryset(self):
+        return Articulo.objects.order_by('nota__fecha')
 
 
 # TODO: Rematar ListaPedidos
