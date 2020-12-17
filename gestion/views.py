@@ -138,7 +138,7 @@ class ListaProductos(LoginRequiredMixin, generic.ListView):
     template_name = 'gestion/productos.html'
 
 
-# TODO: Añadir vista para registro total de articulos
+# REVIEW: Añadir vista para registro total de articulos
 class HistorialNotas(LoginRequiredMixin, generic.ListView):
     model = Articulo
     paginate_by = 15
