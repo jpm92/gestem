@@ -303,6 +303,7 @@ class Articulo(models.Model):
     )
     nota = models.ForeignKey(
         'Nota',
+        related_name='articulos',
         on_delete=models.SET_NULL,
         null=True
     )
@@ -423,6 +424,8 @@ class Pedido(models.Model):
         return f'{self.codigo}'
 
     def email(self, usuario=None):
+        """ Este método envia por email una solicitud de presupuesto para
+        los articulos incluidos en el pedido. """
 
         hora = datetime.now().time()
         if time(0) <= hora < time(12):
@@ -474,6 +477,8 @@ class Nota(models.Model):
         - fecha de anotación
         - usuario que lo ha anotado
         - dirección a la que entregar estos articulos.
+    Se puede acceder a los articulos asociado a cada Nota mediante
+    Nota.articulos.all()
     """
 
     fecha = models.DateTimeField(
