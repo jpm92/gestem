@@ -1,11 +1,13 @@
 {% extends "base_generic.html" %}
-<!-- TODO: Arreglar ese adefesio -->
+
+{% load crispy_forms_tags %}
+
 {% block contenido %}
-<form method="POST" class="pt-2">
+<form method="POST" class="pt-2 col-sm-6 col-md-4 col-lg-3">
   {% csrf_token %}
-  {{ form }}
-    <button type="submit" class="btn btn-primary mt-3 mb-3 w-50">
-      Añadir<i class="fas fa-plus-circle ml-2"></i>
-    </button>
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">
+    Recepcionar<i class="fas fa-check ml-2"></i>
+  </button>
 </form>
 {% endblock %}
