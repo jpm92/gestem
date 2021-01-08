@@ -31,8 +31,8 @@ from django.contrib.auth.decorators import (
 )
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-
-# Create your views here.
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 # REVIEW: Comprobar que funciona Tablon ListView
@@ -179,9 +179,64 @@ class PedidoDetalle(generic.DetailView):
 def Busqueda(request):
     """ Esta vista se encarga de buscar los parámetros introducidos en
     la barra de búsqueda. """
-    # TODO: Implementar búsqueda según el path donde se ejecute:
-    # if request.path == /pedido/ or /articulo/ etc.
-    pass
+
+    path = request.META['HTTP_REFERER']
+
+    b = request.GET.get('q')
+
+    if 'articulo' in path or 'tablon' in path:
+        # Búsqueda de artículos
+        queryset = Articulo.objects.exclude(
+            estado='r'
+        ).filter(
+            Q(producto__nombre_amistoso__icontains=b) |
+            Q(producto__nombre_amistoso__icontains=b) |
+            Q(producto__referencia__icontains=b)
+        ).distinct(
+        ).order_by('-nota__fecha')
+
+        paginacion = Paginator(queryset, 15)
+        pagina = request.GET.get('page')
+        resultado = paginacion.get_page(pagina)
+        return render(
+            request,
+            "gestion/r_articulos.html",
+            {'resultado': resultado}
+        )
+
+    if 'producto' in path:
+        # Búsqueda de productos
+        queryset = Producto.objects.filter(
+            Q(nombre_amistoso__icontains=b) |
+            Q(nombre_amistoso__icontains=b) |
+            Q(referencia__icontains=b)
+        ).order_by('nombre_amistoso')
+
+        paginacion = Paginator(queryset, 15)
+        pagina = request.GET.get('page')
+        resultado = paginacion.get_page(pagina)
+        return render(
+            request,
+            "gestion/r_productos.html",
+            {'resultado': resultado}
+        )
+
+    if 'pedido' in path:
+        # Búsqueda de Pedidos
+        queryset = Pedido.objects.filter(
+            Q(codigo__icontains=b) |
+            Q(cpm__icontains=b) |
+            Q(distribuidor__nomre__icontains=b)
+        ).order_by('-fecha_creacion')
+
+        paginacion = Paginator(queryset, 15)
+        pagina = request.GET.get('page')
+        resultado = paginacion.get_page(pagina)
+        return render(
+            request,
+            "gestion/r_pedidos.html",
+            {'resultado': resultado}
+        )
 
 
 # REVIEW: Comprobar que funciona la vista para formulario de Notas
