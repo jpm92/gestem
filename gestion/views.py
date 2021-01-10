@@ -158,22 +158,30 @@ class HistorialPedidos(LoginRequiredMixin, generic.ListView):
 
 # TODO: Implementar vista en detalle para productos.
 class DetalleProducto(generic.DetailView):
-    pass
+
+    model = Producto
+    template_name = "gestion/detalle_producto.html"
 
 
 # TODO: Implementar vista en detalle para Nota.
 class DetalleNota(generic.DetailView):
-    pass
+
+    model = Nota
+    template_name = "gestion/detalle_nota.html"
 
 
 # TODO: Implementar vista en detalle para Artículo.
 class ArticuloDetalle(generic.DetailView):
-    pass
+
+    model = Articulo
+    template_name = "gestion/detalle_articulo.html"
 
 
 # TODO: Implementar vista en detalle de Pedido.
 class PedidoDetalle(generic.DetailView):
-    pass
+
+    model = Pedido
+    template_name = "gestion/detalle_pedido.html"
 
 
 def Busqueda(request):
