@@ -27,7 +27,7 @@ urlpatterns = [
     path('pedido/<int:pk>/confirmar', views.Confirmar, name='confirmar'),
     path('historial', views.HistorialNotas.as_view(), name='historial'),
     path(
-        'historial/nota/<pk:int>',
+        'historial/nota/<int:pk>',
         views.DetalleNota.as_view(),
         name='nota'
     ),
