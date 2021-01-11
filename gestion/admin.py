@@ -6,6 +6,8 @@ from django.urls import path
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from gestem.aux import keygen
+from django.utils.html import format_html
+from django.urls import reverse
 from gestion.models import (
     Producto,
     Articulo,
@@ -34,7 +36,7 @@ class ProductoAdmin(ImportExportModelAdmin):
 class ArticuloAdmin(ImportExportModelAdmin):
 
     list_display = ('fecha', 'usuario', 'producto', 'unidades', 'nota',
-                    'estado', 'pedido', 'entrega',)
+                    'estado', 'pedido_link', 'entrega',)
     list_filter = ('estado', 'nota__entrega', 'pedido__distribuidor',
                    'pedido__estado',)  # REVIEW: ¿Alguna manera de evitar esta
     # redundancia? Ahora aparecen 2 filtros, uno para el estado de Articulo
@@ -81,6 +83,16 @@ class ArticuloAdmin(ImportExportModelAdmin):
             return obj.nota.entrega
         except AttributeError:
             return f'Objeto {obj.pk}'
+
+    def pedido_link(self, obj):
+        """ Este método añade un enlace al objeto "Pedido" relacionado con el
+        objeto Articulo de la lista de ArticuloAdmin. """
+
+        url = reverse('admin:gestion_pedido_change', args=(obj.pedido.pk,))
+        return format_html(
+            f"<a href='{url}'>{obj.pedido.codigo}</a>"
+        )
+    pedido_link.short_description = 'pedido'
 
     def magia(self, request):
         """ Este método se ejecuta al pulsar el boton en admin. Itera sobre
