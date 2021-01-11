@@ -35,7 +35,11 @@ class ArticuloAdmin(ImportExportModelAdmin):
 
     list_display = ('fecha', 'usuario', 'producto', 'unidades', 'nota',
                     'estado', 'pedido', 'entrega',)
-    list_filter = ('estado', 'nota__entrega', 'pedido__distribuidor')
+    list_filter = ('estado', 'nota__entrega', 'pedido__distribuidor',
+                   'pedido__estado',)  # REVIEW: ¿Alguna manera de evitar esta
+    # redundancia? Ahora aparecen 2 filtros, uno para el estado de Articulo
+    # y otro para el estado de Pedido. El último es muy útil, el primero no se
+    # si merece la pena...
     list_display_links = ('producto',)
     autocomplete_fields = ('producto',)
     list_select_related = ('pedido',)
