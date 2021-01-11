@@ -34,8 +34,8 @@ class ProductoAdmin(ImportExportModelAdmin):
 class ArticuloAdmin(ImportExportModelAdmin):
 
     list_display = ('fecha', 'usuario', 'producto', 'unidades', 'nota',
-                    'estado', 'pedido',)
-    list_filter = ('estado',)
+                    'estado', 'pedido', 'entrega',)
+    list_filter = ('estado', 'nota__entrega', 'pedido__distribuidor')
     list_display_links = ('producto',)
     autocomplete_fields = ('producto',)
     list_select_related = ('pedido',)
@@ -69,6 +69,12 @@ class ArticuloAdmin(ImportExportModelAdmin):
     def usuario(self, obj):
         try:
             return obj.nota.usuario
+        except AttributeError:
+            return f'Objeto {obj.pk}'
+
+    def entrega(self, obj):
+        try:
+            return obj.nota.entrega
         except AttributeError:
             return f'Objeto {obj.pk}'
 
