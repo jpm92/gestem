@@ -24,7 +24,7 @@
       {% for producto in producto_list %}
       <tr>
         <td>{{ producto.nombre_amistoso }}</td>
-        <td>{{ producto.nombre_fabricante }}</td>
+        <td><a href="{% url 'producto' producto.pk %}">{{ producto.nombre_fabricante }}</a></td>
         <td>{{ producto.fabricante }}</td>
         <td>{{ producto.referencia }}</td>
         <td>{{ producto.formato }}</td>
