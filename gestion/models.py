@@ -167,7 +167,7 @@ class Almacen(models.Model):
         verbose_name_plural = _("Almacenes")
 
     def __str__(self):
-        return f'{self.nombre}'
+        return f'{self.nombre} ({self.lugar})'
 
 
 class Entrega(models.Model):
