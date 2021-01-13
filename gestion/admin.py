@@ -87,11 +87,13 @@ class ArticuloAdmin(ImportExportModelAdmin):
     def pedido_link(self, obj):
         """ Este método añade un enlace al objeto "Pedido" relacionado con el
         objeto Articulo de la lista de ArticuloAdmin. """
-
-        url = reverse('admin:gestion_pedido_change', args=(obj.pedido.pk,))
-        return format_html(
-            f"<a href='{url}'>{obj.pedido.codigo}</a>"
-        )
+        try:
+            url = reverse('admin:gestion_pedido_change', args=(obj.pedido.pk,))
+            return format_html(
+                f"<a href='{url}'>{obj.pedido.codigo}</a>"
+            )
+        except AttributeError:
+            return self
     pedido_link.short_description = 'pedido'
 
     def magia(self, request):
