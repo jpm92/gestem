@@ -1,0 +1,60 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block titulo %} Pedido en detalle | PEDIDOS TERSTEM{% endblock %}
+{% block extracss %}
+  <!-- CSS especifico de datatables para el estilo a juego con bootstrap -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+{% block header %}Información sobre el pedido {{ pedido.codigo }}.{% endblock %}
+
+{% block contenido %}
+  <div class="container-fluid">
+      <table id="detalle-pedido" class="table table-striped table-bordered table-sm">
+          <tr>
+              <td class="w-30"><strong>Fecha de creación:</strong></td>
+              <td>{{ pedido.fecha_creacion }}</td>
+          </tr>
+          <tr>
+              <td class="w-30"><strong>Estado:</strong></td>
+              <td>{{ pedido.get_estado_display }}</td>
+          </tr>
+          <tr>
+              <td class="w-30"><strong>CPM:</strong></td>
+              <td>{{ pedido.cpm }}{% if pedido.fecha_cpm %} ({{ pedido.fecha_cpm }}){% endif %}</td>
+          </tr>
+          <tr>
+              <td class="w-30"><strong>Distribuidor:</strong></td>
+              <td>{{ pedido.distribuidor }}</td>
+          </tr>
+          <tr>
+              <td class="w-30"><strong>Centro de Gasto:</strong></td>
+              <td>{{ pedido.centro_gasto }}</td>
+          </tr>
+          <tr>
+              <td class="w-30"><strong>Entrega:</strong></td>
+              <td>{{ pedido.entrega }}</td>
+          </tr>
+          {% if pedido.estado == 'p' %}
+          <tr>
+              <td class="w-30"><strong>Fecha confirmación:</strong></td>
+              <td>{{ pedido.fecha_confirmacion }}</td>
+          </tr>
+          {% endif %}
+          <tr>
+              <td class="w-30"><strong>Productos:</strong></td>
+              <td>
+                <ul>
+                  {% for articulo in pedido.productos.all %}
+                  <li><a href="{% url 'articulo' articulo.pk %}">{{ articulo.sumario }}</a></li>
+                  {% endfor %}
+                </ul>
+              </td>
+          </tr>
+      </table>
+  </div>
+{% endblock %}
+
+{% block extrajs %}
+  <!-- JS para copiar codigos con un click -->
+  <script src="{% static 'gestion/js/copiable.js' %}"></script>
+{% endblock %}

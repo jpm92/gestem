@@ -124,7 +124,7 @@ def Reclamar(request):
 class CrearProducto(LoginRequiredMixin, CreateView):
     model = Producto
     form_class = ProductoForm
-    template_name = 'gestion/producto.html'
+    template_name = 'gestion/crear_producto.html'
     success_url = "/"
 
 
@@ -133,7 +133,7 @@ class ListaProductos(LoginRequiredMixin, generic.ListView):
     """ Esta vista se encarga de mostrar la lista de productos disponibles
     en la base de datos. """
     model = Producto
-    ordering = ['-nombre_amistoso']
+    ordering = ['nombre_amistoso']
     paginate_by = 15
     template_name = 'gestion/productos.html'
 

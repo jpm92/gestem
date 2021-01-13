@@ -21,3 +21,11 @@ html, body {
 hr {
   border-top: 2px solid gray;
 }
+
+#historial-pedidos a {
+  font-weight: bold;
+}
+
+#detalle-pedido a {
+  color: black;
+}

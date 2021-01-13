@@ -17,12 +17,12 @@ urlpatterns = [
     path('cuentas/', include('django.contrib.auth.urls')),
     path('cuentas/password', views.cambio_password, name='cambiopassword'),
     path(
-        'articulo/<int:pk>', views.ArticuloDetalle.as_view(), name='productos'
+        'articulo/<int:pk>', views.ArticuloDetalle.as_view(), name='articulo'
     ),
     path('articulo/<int:pk>/recepcionar/', views.Recepcion, name='recepcion'),
     path('articulo/<int:pk>/reclamar', views.Reclamar, name='reclamar'),
     path('pedidos/', views.HistorialPedidos.as_view(), name='pedidos'),
-    path('pedidos/<int:pk>', views.PedidoDetalle.as_view(), name='pedido'),
+    path('pedido/<int:pk>', views.PedidoDetalle.as_view(), name='pedido'),
     path('pedido/<int:pk>/cpm', views.CPM, name='cpm'),
     path('pedido/<int:pk>/confirmar', views.Confirmar, name='confirmar'),
     path('historial', views.HistorialNotas.as_view(), name='historial'),
