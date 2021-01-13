@@ -128,7 +128,7 @@ class CrearProducto(LoginRequiredMixin, CreateView):
     success_url = "/"
 
 
-# TODO: Rematar lista de productos, con su búsqueda Select 2 incluida.
+# REVIEW: Rematar lista de productos, con su búsqueda Select 2 incluida.
 class ListaProductos(LoginRequiredMixin, generic.ListView):
     """ Esta vista se encarga de mostrar la lista de productos disponibles
     en la base de datos. """
@@ -148,7 +148,7 @@ class HistorialNotas(LoginRequiredMixin, generic.ListView):
         return Articulo.objects.order_by('nota__fecha')
 
 
-# TODO: Rematar ListaPedidos
+# REVIEW: Rematar ListaPedidos
 class HistorialPedidos(LoginRequiredMixin, generic.ListView):
     model = Pedido
     ordering = ['-fecha_creacion']
@@ -156,7 +156,7 @@ class HistorialPedidos(LoginRequiredMixin, generic.ListView):
     template_name = 'gestion/pedidos.html'
 
 
-# TODO: Implementar vista en detalle para productos.
+# REVIEW: Implementar vista en detalle para productos.
 class DetalleProducto(generic.DetailView):
 
     model = Producto
@@ -177,7 +177,7 @@ class ArticuloDetalle(generic.DetailView):
     template_name = "gestion/detalle_articulo.html"
 
 
-# TODO: Implementar vista en detalle de Pedido.
+# REVIEW: Implementar vista en detalle de Pedido.
 class PedidoDetalle(generic.DetailView):
 
     model = Pedido
@@ -206,6 +206,7 @@ def Busqueda(request):
         paginacion = Paginator(queryset, 15)
         pagina = request.GET.get('page')
         resultado = paginacion.get_page(pagina)
+        # TODO: Crear plantilla para resultados_articulos
         return render(
             request,
             "gestion/r_articulos.html",
@@ -223,6 +224,7 @@ def Busqueda(request):
         paginacion = Paginator(queryset, 15)
         pagina = request.GET.get('page')
         resultado = paginacion.get_page(pagina)
+        # TODO: Crear plantilla para resultados_productos
         return render(
             request,
             "gestion/r_productos.html",
@@ -240,6 +242,7 @@ def Busqueda(request):
         paginacion = Paginator(queryset, 15)
         pagina = request.GET.get('page')
         resultado = paginacion.get_page(pagina)
+        # Crear plantilla para resultados_pedidos
         return render(
             request,
             "gestion/r_pedidos.html",
