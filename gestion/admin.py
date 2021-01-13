@@ -106,7 +106,7 @@ class ArticuloAdmin(ImportExportModelAdmin):
             self.message_user(
                 request,
                 _('¡No hay articulos pendientes de procesar!')
-                )
+            )
             return redirect('admin:gestion_articulo_changelist')
         # De lo contrario procedemos a la clasificación.
         else:
