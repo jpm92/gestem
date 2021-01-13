@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from gestion.tasks import solicitud_email
 from gestem.aux import keygen
+from django.utils import timezone
 
 
 def get_name(self):
@@ -91,6 +92,14 @@ class Producto(models.Model):
 
     def __str__(self):
         return f'{self.nombre_amistoso} ({self.fabricante}: {self.referencia})'
+
+    def en_curso(self):
+        """ Este método comprueba si hay algun artículo relacionado con la
+        instancia del producto cuya solicitud esta en curso. """
+
+        articulos = self.articulo_set.all().exclude(estado='r')
+
+        return articulos
 
 
 class Fabricante(models.Model):
@@ -350,8 +359,8 @@ class Articulo(models.Model):
         """ Método que devuelve una cadena de texto con la información mas
         relevante del objeto (útil para usar en plantilla detalle_pedido). """
 
-        fecha_bruta = self.nota.fecha
-        fecha = fecha_bruta.strftime("%d/%m/%Y %H:%M:%S")
+        fecha_bruta = timezone.localtime(self.nota.fecha)
+        fecha = fecha_bruta.strftime('%d/%m/%Y %H:%M:%S')
 
         cadena = f'{self.producto} [{self.unidades} uds.] \
         (por {self.nota.usuario} el {fecha}).'
