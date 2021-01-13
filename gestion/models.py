@@ -346,6 +346,18 @@ class Articulo(models.Model):
         lo reclame. """
         pass  # TODO: Implementar meth:atrasado
 
+    def sumario(self):
+        """ Método que devuelve una cadena de texto con la información mas
+        relevante del objeto (útil para usar en plantilla detalle_pedido). """
+
+        fecha_bruta = self.nota.fecha
+        fecha = fecha_bruta.strftime("%d/%m/%Y %H:%M:%S")
+
+        cadena = f'{self.producto} [{self.unidades} uds.] \
+        (por {self.nota.usuario} el {fecha}).'
+
+        return cadena
+
 
 class Pedido(models.Model):
     """ Este modelo representa un pedido en firme a un distribuidor. Los
