@@ -28,11 +28,11 @@
         <td>{{ articulo.nota.fecha|date:"SHORT_DATETIME_FORMAT" }}</td>
         <td>{{ articulo.nota.usuario.get_short_name }}</td>
         <td>{{ articulo.get_estado_display }}</td>
-        <td>{{ articulo.producto.nombre_fabricante }}</td>
+        <td><a href="{% url 'articulo' articulo.pk %}">{{ articulo.producto.nombre_fabricante }}</a></td>
         <td>{{ articulo.producto.fabricante }}</td>
         <td>{{ articulo.producto.referencia }}</td>
         <td>{{ articulo.unidades }}</td>
-        <td>{{ articulo.nota }}</td>
+        <td><a href="{% url 'nota' articulo.nota.pk %}">{{ articulo.nota }}</a></td>
         <td>{{ articulo.nota.entrega }}</td>
       </tr>
       {% endfor %}
