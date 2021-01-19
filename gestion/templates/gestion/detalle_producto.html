@@ -1,10 +1,6 @@
 {% extends "base_generic.html" %}
 {% load static %}
 {% block titulo %} Producto en detalle | PEDIDOS TERSTEM{% endblock %}
-{% block extracss %}
-  <!-- CSS especifico de datatables para el estilo a juego con bootstrap -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
-{% endblock %}
 {% block header %}Información sobre el producto {{ producto.referencia }}.{% endblock %}
 
 {% block contenido %}
@@ -56,9 +52,4 @@
           </tr>
       </table>
   </div>
-{% endblock %}
-
-{% block extrajs %}
-  <!-- JS para copiar codigos con un click -->
-  <script src="{% static 'gestion/js/copiable.js' %}"></script>
 {% endblock %}
