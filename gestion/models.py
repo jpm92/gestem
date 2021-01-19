@@ -101,6 +101,15 @@ class Producto(models.Model):
 
         return articulos
 
+    def sumario(self):
+        """ Este método devuelve la información más basica del producto en
+        forma de cadena. """
+
+        cadena = f'{self.nombre_amistoso}, {self.fabricante}\
+         ({self.referencia})'
+
+        return cadena
+
 
 class Fabricante(models.Model):
     """ Este modelo representa al fabricante de cada uno de los productos del
