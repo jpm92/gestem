@@ -236,7 +236,7 @@ def Busqueda(request):
         queryset = Pedido.objects.filter(
             Q(codigo__icontains=b) |
             Q(cpm__icontains=b) |
-            Q(distribuidor__nomre__icontains=b)
+            Q(distribuidor__nombre__icontains=b)
         ).order_by('-fecha_creacion')
 
         paginacion = Paginator(queryset, 15)
