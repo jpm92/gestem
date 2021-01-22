@@ -163,14 +163,14 @@ class DetalleProducto(generic.DetailView):
     template_name = "gestion/detalle_producto.html"
 
 
-# TODO: Implementar vista en detalle para Nota.
+# REVIEW: Implementar vista en detalle para Nota.
 class DetalleNota(generic.DetailView):
 
     model = Nota
     template_name = "gestion/detalle_nota.html"
 
 
-# TODO: Implementar vista en detalle para Artículo.
+# REVIEW: Implementar vista en detalle para Artículo.
 class ArticuloDetalle(generic.DetailView):
 
     model = Articulo
@@ -224,11 +224,11 @@ def Busqueda(request):
         paginacion = Paginator(queryset, 15)
         pagina = request.GET.get('page')
         resultado = paginacion.get_page(pagina)
-        # TODO: Crear plantilla para resultados_productos
+        # REVIEW: Crear plantilla para resultados_productos
         return render(
             request,
-            "gestion/r_productos.html",
-            {'resultado': resultado}
+            "gestion/productos.html",
+            {'producto_list': resultado}
         )
 
     if 'pedido' in path:
@@ -245,8 +245,8 @@ def Busqueda(request):
         # Crear plantilla para resultados_pedidos
         return render(
             request,
-            "gestion/r_pedidos.html",
-            {'resultado': resultado}
+            "gestion/pedidos.html",
+            {'pedido_list': resultado}
         )
 
 
