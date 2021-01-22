@@ -192,13 +192,13 @@ def Busqueda(request):
 
     b = request.GET.get('q')
 
-    if 'articulo' in path or 'tablon' in path:
+    if 'articulo' in path or 'tablon' in path or 'historial' in path:
         # Búsqueda de artículos
         queryset = Articulo.objects.exclude(
             estado='r'
         ).filter(
             Q(producto__nombre_amistoso__icontains=b) |
-            Q(producto__nombre_amistoso__icontains=b) |
+            Q(producto__nombre_fabricante__icontains=b) |
             Q(producto__referencia__icontains=b)
         ).distinct(
         ).order_by('-nota__fecha')
@@ -206,11 +206,11 @@ def Busqueda(request):
         paginacion = Paginator(queryset, 15)
         pagina = request.GET.get('page')
         resultado = paginacion.get_page(pagina)
-        # TODO: Crear plantilla para resultados_articulos
+        # REVIEW: Crear plantilla para resultados_articulos
         return render(
             request,
             "gestion/r_articulos.html",
-            {'resultado': resultado}
+            {'resultados': resultado}
         )
 
     if 'producto' in path:
