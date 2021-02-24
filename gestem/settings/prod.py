@@ -12,6 +12,10 @@ ADMINS = [('Jesús Peña', "jesuspm92@gmail.com")]
 
 CELERY_BROKER_URL = 'amqp://wmaster:134256@localhost/vhost'
 
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+
 EMAIL_USE_TLS = True
 
 EMAIL_HOST = os.getenv('EMAIL_HOST')
