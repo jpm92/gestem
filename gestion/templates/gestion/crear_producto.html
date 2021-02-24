@@ -1,5 +1,10 @@
 {% extends "base_generic.html" %}
+
 {% block titulo %}Nuevo producto | PEDIDOS TERSTEM{% endblock %}
+
+{% block url_busqueda %}"{% url 'bproducto' %}"{% endblock %}
+{% block placeholder_busqueda %}"Buscar producto"{% endblock %}
+
 {% block header %}
   Añadir producto.
 {% endblock %}

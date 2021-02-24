@@ -2,6 +2,9 @@
 
 {% load crispy_forms_tags %}
 
+{% block url_busqueda %}"{% url 'bpedido' %}"{% endblock %}
+{% block placeholder_busqueda %}"Buscar pedido"{% endblock %}
+
 {% block contenido %}
 <form method="POST" class="pt-2 w-25">
   {% csrf_token %}

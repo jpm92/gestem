@@ -1,6 +1,10 @@
 {% extends "base_generic.html" %}
 {% load static %}
 {% block titulo %} Producto en detalle | PEDIDOS TERSTEM{% endblock %}
+
+{% block url_busqueda %}"{% url 'bproducto' %}"{% endblock %}
+{% block placeholder_busqueda %}"Buscar producto"{% endblock %}
+
 {% block header %}Información sobre el producto {{ producto.referencia }}.{% endblock %}
 
 {% block contenido %}

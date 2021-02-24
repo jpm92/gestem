@@ -192,70 +192,143 @@ class PedidoDetalle(generic.DetailView):
     template_name = "gestion/detalle_pedido.html"
 
 
-def Busqueda(request):
-    """ Esta vista se encarga de buscar los parámetros introducidos en
+def BusquedaArticulo(request):
+    """ Esta vista se encarga de buscar los articulos introducidos en
     la barra de búsqueda. """
-
-    path = request.META['HTTP_REFERER']
 
     b = request.GET.get('q')
 
-    if 'articulo' in path or 'tablon' in path or 'historial' in path:
-        # Búsqueda de artículos
-        queryset = Articulo.objects.exclude(
-            estado='r'
-        ).filter(
-            Q(producto__nombre_amistoso__icontains=b) |
-            Q(producto__nombre_fabricante__icontains=b) |
-            Q(producto__referencia__icontains=b)
-        ).distinct(
-        ).order_by('-nota__fecha')
+    queryset = Articulo.objects.exclude(
+        estado='r'
+    ).filter(
+        Q(producto__nombre_amistoso__icontains=b) |
+        Q(producto__nombre_fabricante__icontains=b) |
+        Q(producto__referencia__icontains=b)
+    ).distinct(
+    ).order_by('-nota__fecha')
 
-        paginacion = Paginator(queryset, 15)
-        pagina = request.GET.get('page')
-        resultado = paginacion.get_page(pagina)
-        # REVIEW: Crear plantilla para resultados_articulos
-        return render(
-            request,
-            "gestion/r_articulos.html",
-            {'resultados': resultado}
-        )
+    paginacion = Paginator(queryset, 15)
+    pagina = request.GET.get('page')
+    resultado = paginacion.get_page(pagina)
+    # REVIEW: Crear plantilla para resultados_articulos
+    return render(
+        request,
+        "gestion/r_articulos.html",
+        {'resultados': resultado}
+    )
 
-    if 'producto' in path:
-        # Búsqueda de productos
-        queryset = Producto.objects.filter(
-            Q(nombre_amistoso__icontains=b) |
-            Q(nombre_amistoso__icontains=b) |
-            Q(referencia__icontains=b)
-        ).order_by('nombre_amistoso')
 
-        paginacion = Paginator(queryset, 15)
-        pagina = request.GET.get('page')
-        resultado = paginacion.get_page(pagina)
-        # REVIEW: Crear plantilla para resultados_productos
-        return render(
-            request,
-            "gestion/productos.html",
-            {'producto_list': resultado}
-        )
+def BusquedaPedido(request):
+    """ Esta vista se encarga de buscar los pedidos introducidos en
+    la barra de búsqueda. """
 
-    if 'pedido' in path:
-        # Búsqueda de Pedidos
-        queryset = Pedido.objects.filter(
-            Q(codigo__icontains=b) |
-            Q(cpm__icontains=b) |
-            Q(distribuidor__nombre__icontains=b)
-        ).order_by('-fecha_creacion')
+    b = request.GET.get('q')
 
-        paginacion = Paginator(queryset, 15)
-        pagina = request.GET.get('page')
-        resultado = paginacion.get_page(pagina)
-        # Crear plantilla para resultados_pedidos
-        return render(
-            request,
-            "gestion/pedidos.html",
-            {'pedido_list': resultado}
-        )
+    queryset = Pedido.objects.filter(
+        Q(codigo__icontains=b) |
+        Q(cpm__icontains=b) |
+        Q(distribuidor__nombre__icontains=b)
+    ).order_by('-fecha_creacion')
+
+    paginacion = Paginator(queryset, 15)
+    pagina = request.GET.get('page')
+    resultado = paginacion.get_page(pagina)
+    # Crear plantilla para resultados_pedidos
+    return render(
+        request,
+        "gestion/pedidos.html",
+        {'pedido_list': resultado}
+    )
+
+
+def BusquedaProducto(request):
+    """ Esta vista se encarga de buscar los productos introducidos en
+    la barra de búsqueda. """
+
+    b = request.GET.get('q')
+
+    queryset = Producto.objects.filter(
+        Q(nombre_amistoso__icontains=b) |
+        Q(nombre_amistoso__icontains=b) |
+        Q(referencia__icontains=b)
+    ).order_by('nombre_amistoso')
+
+    paginacion = Paginator(queryset, 15)
+    pagina = request.GET.get('page')
+    resultado = paginacion.get_page(pagina)
+    # REVIEW: Crear plantilla para resultados_productos
+    return render(
+        request,
+        "gestion/productos.html",
+        {'producto_list': resultado}
+    )
+
+
+# NOTE: Desactivada hasta nuevo aviso, mejor ir a lo seguro
+# def Busqueda(request):
+#     """ Esta vista se encarga de buscar los parámetros introducidos en
+#     la barra de búsqueda. """
+#
+#     path = request.META['HTTP_REFERER']
+#
+#     b = request.GET.get('q')
+#
+#     if 'articulo' in path or 'tablon' in path or 'historial' in path:
+#         # Búsqueda de artículos
+#         queryset = Articulo.objects.exclude(
+#             estado='r'
+#         ).filter(
+#             Q(producto__nombre_amistoso__icontains=b) |
+#             Q(producto__nombre_fabricante__icontains=b) |
+#             Q(producto__referencia__icontains=b)
+#         ).distinct(
+#         ).order_by('-nota__fecha')
+#
+#         paginacion = Paginator(queryset, 15)
+#         pagina = request.GET.get('page')
+#         resultado = paginacion.get_page(pagina)
+#         # REVIEW: Crear plantilla para resultados_articulos
+#         return render(
+#             request,
+#             "gestion/r_articulos.html",
+#             {'resultados': resultado}
+#         )
+#
+#     if 'producto' in path:
+#         # Búsqueda de productos
+#         queryset = Producto.objects.filter(
+#             Q(nombre_amistoso__icontains=b) |
+#             Q(nombre_amistoso__icontains=b) |
+#             Q(referencia__icontains=b)
+#         ).order_by('nombre_amistoso')
+#
+#         paginacion = Paginator(queryset, 15)
+#         pagina = request.GET.get('page')
+#         resultado = paginacion.get_page(pagina)
+#         # REVIEW: Crear plantilla para resultados_productos
+#         return render(
+#             request,
+#             "gestion/productos.html",
+#             {'producto_list': resultado}
+#         )
+#
+#     if 'pedido' in path:
+#         # Búsqueda de Pedidos
+#         queryset = Pedido.objects.filter(
+#             Q(codigo__icontains=b) |
+#             Q(cpm__icontains=b) |
+#             Q(distribuidor__nombre__icontains=b)
+#         ).order_by('-fecha_creacion')
+#
+#         paginacion = Paginator(queryset, 15)
+#         pagina = request.GET.get('page')
+#         resultado = paginacion.get_page(pagina)
+#         # Crear plantilla para resultados_pedidos
+#         return render(
+#             request,
+#             "gestion/pedidos.html",
+#             {'pedido_list': resultado}
+#         )
 
 
 # REVIEW: Comprobar que funciona la vista para formulario de Notas

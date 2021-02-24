@@ -32,5 +32,7 @@ urlpatterns = [
         views.DetalleNota.as_view(),
         name='nota'
     ),
-    path('busqueda', views.Busqueda, name='busqueda'),
+    path('busqueda_articulo', views.BusquedaArticulo, name='barticulo'),
+    path('busqueda_pedido', views.BusquedaPedido, name='bpedido'),
+    path('busqueda_producto', views.BusquedaProducto, name='bproducto'),
 ]
