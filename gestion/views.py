@@ -121,6 +121,14 @@ def Reclamar(request):
     pass
 
 
+def Cancelar(request, pk):
+    """ Esta vista de encarga de cancelar una anotación que aún no ha sido
+    tramitada. """
+    anotacion = get_object_or_404(Articulo, id=pk)
+    anotacion.delete()
+    return redirect('tablon')
+
+
 class CrearProducto(LoginRequiredMixin, CreateView):
     model = Producto
     form_class = ProductoForm

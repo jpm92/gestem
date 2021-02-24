@@ -97,8 +97,13 @@
             </td>
             <td>{{ articulo.unidades }}</td>
             <td>
-              <a href="{% url 'recepcion' articulo.pk %}" class="btn btn-success active py-1 px-2"
-                  role="button" aria-pressed="true"><i class="far fa-check-circle"></i></a>
+              {% if articulo.pedido %}
+                <a href="{% url 'recepcion' articulo.pk %}" class="btn btn-success active py-1 px-2"
+                    role="button" aria-pressed="true"><i class="far fa-check-circle"></i></a>
+              {% else %}
+                <a href="{% url 'cancelar' articulo.pk %}" class="btn btn-danger active py-1 px-2"
+                    role="button" aria-pressed="true"><i class="fas fa-window-close"></i></a>
+              {% endif %}
               <a href="{% url 'reclamar' articulo.pk %}" class="btn btn-warning disabled p-1"
                   role="button" aria-pressed="true"><i class="fas fa-bell"></i></a>
             </td>
