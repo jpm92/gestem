@@ -476,7 +476,7 @@ class Pedido(models.Model):
         plain_message = strip_tags(html_message)
         from_email = 'pedidosterstem@ugr.es'
         to = [self.distribuidor.contacto]
-        solicitud_email(  # TODO: .delay() cuando este en prod
+        solicitud_email.delay(
             subject,
             plain_message,
             from_email,
