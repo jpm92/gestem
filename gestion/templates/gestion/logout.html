@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block header %}Sesión finalizada.{% endblock %}
+
+{% block contenido %}
+    <div class="container-fluid">
+        <p>¡Desconectado con éxito!</p>
+        <p>Nos vemos pronto.</p>
+        <a href="{% url 'login' %}">Pulsa aqui para volver a iniciar sesión.</a>
+    </div>
+{% endblock %}

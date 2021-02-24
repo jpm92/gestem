@@ -30,7 +30,7 @@ from django.contrib.auth.decorators import (
     #  permission_required
 )
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, logout
 from django.core.paginator import Paginator
 from django.db.models import Q
 
@@ -486,3 +486,9 @@ def cambio_password(request):
     return render(request, 'registration/cambiar_password.html', {
         'form': form
     })
+
+
+def salir(request):
+    """ Desconecta al usuario y reenvia a página de despedida. """
+    logout(request)
+    return render(request, 'gestion/logout.html')
