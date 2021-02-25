@@ -298,14 +298,22 @@ class NotaAdmin(ImportExportModelAdmin):
     inlines = (ArticuloInline,)
 
 
+class FabricanteAdmin(ImportExportModelAdmin):
+    pass
+
+
+class DistribuidorAdmin(ImportExportModelAdmin):
+    pass
+
+
 admin.site.register(Producto, ProductoAdmin)
 admin.site.register(Articulo, ArticuloAdmin)
 admin.site.register(Pedido, PedidoAdmin)
 admin.site.register(CentroGasto)
 admin.site.register(Entrega)
 admin.site.register(Almacen)
-admin.site.register(Fabricante)
-admin.site.register(Distribuidor)
+admin.site.register(Fabricante, FabricanteAdmin)
+admin.site.register(Distribuidor, DistribuidorAdmin)
 admin.site.register(Nota, NotaAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
