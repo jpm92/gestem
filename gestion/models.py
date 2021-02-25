@@ -120,7 +120,7 @@ class Fabricante(models.Model):
         help_text=_('Nombre del fabricante.')
     )
     web = models.CharField(
-        max_length=25,
+        max_length=60,
         help_text=_('Página web del fabricante.'),
         blank=True
     )
@@ -543,7 +543,7 @@ class CentroGasto(models.Model):
         help_text=_('Nombre del centro de gasto.')
     )
     codigo = models.CharField(
-        max_length=50,
+        max_length=150,
         help_text=_('Codigo del centro de gasto dentro de la UGR.')
     )
     pertenencia_ugr = models.BooleanField(
