@@ -14,6 +14,7 @@ django-crispy-forms==1.9.2
 django-import-export==2.4.0
 django-select2==7.4.2
 et-xmlfile==1.0.1
+gunicorn==20.0.4
 jdcal==1.4.1
 kombu==5.0.2
 MarkupPy==1.14
