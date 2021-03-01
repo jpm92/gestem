@@ -70,7 +70,6 @@ class Tablon(LoginRequiredMixin, generic.ListView):
 
 
 # REVIEW: Añadir vista para tablón Secretario
-# TODO: Añadir permisos
 class Secretario(PermissionRequiredMixin, generic.ListView):
     permission_required = (
         'gestion.secretaria',
