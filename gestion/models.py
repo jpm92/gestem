@@ -449,6 +449,9 @@ class Pedido(models.Model):
     class Meta:
         verbose_name = _("Pedido")
         verbose_name_plural = _("Pedidos")
+        permissions = (
+            ('secretaria', _('Privilegios de secretaria (editar pedidos)')),
+        )
 
     def __str__(self):
         return f'{self.codigo}'

@@ -9,7 +9,7 @@ from gestion.models import (
 )
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
-    #  PermissionRequiredMixin
+    PermissionRequiredMixin
 )
 from gestion.forms import (
     ArticuloForm,
@@ -27,7 +27,7 @@ from django.contrib import messages
 from django.views import generic
 from django.contrib.auth.decorators import (
     login_required,
-    #  permission_required
+    permission_required
 )
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, logout
@@ -70,7 +70,11 @@ class Tablon(LoginRequiredMixin, generic.ListView):
 
 
 # REVIEW: Añadir vista para tablón Secretario
-class Secretario(LoginRequiredMixin, generic.ListView):
+# TODO: Añadir permisos
+class Secretario(PermissionRequiredMixin, generic.ListView):
+    permission_required = (
+        'gestion.secretaria',
+    )
     model = Pedido
     ordering = ['-fecha_creacion']
     paginate_by = 15
@@ -81,6 +85,7 @@ class Secretario(LoginRequiredMixin, generic.ListView):
 
 
 # REVIEW: Añadir vista para Añadir CPM (Secretario)
+@permission_required('gestion.secretaria')
 def CPM(request, pk):
     """ Modifica el CPM de un pedido y actualiza su estado a
     "Para Validar". """
@@ -106,6 +111,7 @@ def CPM(request, pk):
 
 
 # REVIEW: Añadir vista para Marcar pedido como Lanzado (Secretario)
+@permission_required('gestion.secretaria')
 def Confirmar(request, pk):
     pedido = get_object_or_404(Pedido, id=pk)
     pedido.estado = 'p'
