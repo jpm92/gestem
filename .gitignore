@@ -3,3 +3,4 @@ gestem/settings/dev.py
 */__pycache__
 gestem/settings/__pycache__
 gestion/migrations
+gestem/mailer.html
