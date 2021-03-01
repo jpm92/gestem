@@ -16,7 +16,7 @@ STATIC_ROOT = "/srv/www/gestem/static/"
 
 # SESSION_COOKIE_SECURE = True # Activar cuando este el SSL
 
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 EMAIL_USE_TLS = True
 
