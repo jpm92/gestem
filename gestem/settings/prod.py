@@ -12,6 +12,8 @@ ADMINS = [('Jesús Peña', "jesuspm92@gmail.com")]
 
 CELERY_BROKER_URL = 'amqp://wmaster:134256@localhost/vhost'
 
+STATIC_ROOT = "/srv/www/gestem/static/"
+
 SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SECURE = True
