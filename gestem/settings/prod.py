@@ -14,7 +14,7 @@ CELERY_BROKER_URL = 'amqp://wmaster:134256@localhost/vhost'
 
 STATIC_ROOT = "/srv/www/gestem/static/"
 
-SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True # Activar cuando este el SSL
 
 CSRF_COOKIE_SECURE = True
 
