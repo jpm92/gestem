@@ -479,7 +479,7 @@ class Pedido(models.Model):
         plain_message = strip_tags(html_message)
         from_email = 'pedidosterstem@ugr.es'
         to = [self.distribuidor.contacto]
-        solicitud_email.delay(
+        solicitud_email(
             subject,
             plain_message,
             from_email,
