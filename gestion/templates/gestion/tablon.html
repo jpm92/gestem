@@ -1,11 +1,24 @@
 {% extends "base_generic.html" %}
+
 {% load static %}
+
 {% block titulo %}Tablón | PEDIDOS TERSTEM{% endblock %}
+
 {% block extracss %}
   <!-- CSS especifico de datatables para el estilo a juego con bootstrap -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 {% endblock %}
+
+{% block boton_extra %}
+  {% if perms.gestion.secretaria %}
+    <li class="nav-item mt-2 my-xl-0">
+      <a class="nav-link" href="{% url 'secretaria' %}"><i class="fas fa-file-signature pr-1"></i>Secretaría<span class="sr-only">(current)</span></a>
+    </li>
+  {% endif %}
+{% endblock %}
+
 {% block header %}Bienvenid@ a tu tablón, {{ request.user.get_short_name }} <i class="far fa-laugh-beam"></i>{% endblock %}
+
 {% block contenido %}
   <div class="row mt-1">
     <div class="col-xl-2">
