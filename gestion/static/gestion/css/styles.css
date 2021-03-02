@@ -43,3 +43,9 @@ hr {
   margin: 0px;
   color: grey;
 }
+
+#secretaria .c span {
+  background-color: #FFC300;
+  padding: 0.35em;
+  border-radius: 0.2rem;
+}
