@@ -281,6 +281,21 @@ class Entrega(models.Model):
             html += f'<br><b>Horario:</b> {self.horario}'
         return html
 
+    def resumen_secretaria(self):
+        """ Este método devuelve una cadena con toda la información del
+        sitio de entrega resumida preparada para ser copiada con
+        un click por la secretaria. """
+
+        dir = f'{self.centro};\n{self.laboratorio}, Aa {self.aa}\n'
+        dir += f'{self.direccion}\n{self.cp} {self.poblacion}\nESPAÑA'
+        if self.instrucciones:
+            dir += f'\n{self.instrucciones}'
+        if self.contacto:
+            dir += f'\nContacto: {self.contacto}'
+        if self.horario:
+            dir += f'\nHorario: {self.horario}'
+        return dir
+
 
 class Articulo(models.Model):
     """ Este modelo representa la instancia de un producto anotado por un

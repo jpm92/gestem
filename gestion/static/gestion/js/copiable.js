@@ -8,9 +8,23 @@ function indexInParent(node) {
   return -1;
 }
 
+
 function copy(event) {
   var target = event.target || event.srcElement;
   var copyText = target.innerText || target.textContent;
+  navigator.clipboard.writeText(copyText)
+
+  // Seleccionar la celda -> No me interesa por ahora.
+  // var range = document.createRange();
+  // range.selectNode(target);
+  // window.getSelection().removeAllRanges();
+  // window.getSelection().addRange(range);
+}
+
+function copy2(event) {
+  var target = this.parentNode.parentNode.querySelector("span")
+  var copyText = target.dataset.direccion;
+  console.log(copyText)
   navigator.clipboard.writeText(copyText)
 
   // Seleccionar la celda -> No me interesa por ahora.
@@ -30,3 +44,6 @@ for (var i=0; i < columnas.length; i++) {
   document.querySelectorAll("th:nth-child("+index+")")
   .forEach(elem => elem.addEventListener("click", copy));
 }
+
+var entregas = document.getElementsByClassName("fa-copy");
+Array.from(entregas).forEach(elem => elem.addEventListener("click", copy2));
