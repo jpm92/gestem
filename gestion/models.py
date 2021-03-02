@@ -625,7 +625,7 @@ class Borrador(models.Model):
         ('s', _('Semanal')),
         ('m', _('Mensual')),
         ('a', _('Anual')),
-        ('q', _('15 dias')),
+        ('q', _('Quincenal')),
         ('n', _('Ninguna')),
     ]
     periodico = models.CharField(
