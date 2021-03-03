@@ -379,7 +379,7 @@ class Articulo(models.Model):
         lo reclame. """
 
         if self.estado != 'r':
-            tiempo = datetime.now() - self.nota.fecha
+            tiempo = timezone.now() - self.nota.fecha
             if tiempo.days >= 3:
                 return True
             else:
