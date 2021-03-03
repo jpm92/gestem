@@ -93,7 +93,7 @@ class ArticuloAdmin(ImportExportModelAdmin):
                 f"<a href='{url}'>{obj.pedido.codigo}</a>"
             )
         except AttributeError:
-            return self
+            return 'Pendiente'
     pedido_link.short_description = 'pedido'
 
     def magia(self, request):
