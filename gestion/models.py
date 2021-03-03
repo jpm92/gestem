@@ -380,7 +380,7 @@ class Articulo(models.Model):
 
         if self.estado != 'r':
             tiempo = timezone.now() - self.nota.fecha
-            if tiempo.days >= 3:
+            if tiempo.days >= 30:
                 return True
             else:
                 return False
