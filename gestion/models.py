@@ -373,11 +373,19 @@ class Articulo(models.Model):
         except AttributeError:
             return str(self.pk)
 
-    def atrasado(self):
+    def atrasado(self):  # REVIEW: Revisar que funciona (no se da el caso)
         """ Método para marcar un articulo como "con retraso" para
         asi notificar al usuario en su tablón que o bien lo recepcione o bien
         lo reclame. """
-        pass  # TODO: Implementar meth:atrasado
+
+        if self.estado != 'r':
+            tiempo = datetime.now() - self.nota.fecha
+            if tiempo.days >= 3:
+                return True
+            else:
+                return False
+        else:
+            pass
 
     def sumario(self):
         """ Método que devuelve una cadena de texto con la información mas
