@@ -605,7 +605,9 @@ class PerfilExtendido(models.Model):
     )
 
 
-class Borrador(models.Model):
+class Borrador(models.Model):  # FIXME: Necesario corregir logica de articulos.
+    # Hay que distinguir entre articulo.borrador None y True para evitar que sean tramitados
+    # como articulos convencionales. Corregir en meth:clasificar y en vistas de articulos.
     """ Este modelo representa un borrador de pedido. Se utiliza para
     guardar pedidos que se realicen muy a menudo, de manera que no haya que
     crearlos manualmente cada vez. Simplemente se acude al borrador
