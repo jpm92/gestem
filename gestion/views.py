@@ -51,6 +51,8 @@ class Tablon(LoginRequiredMixin, generic.ListView):
             ).order_by(  # QUESTION: No se si se podría hacer con "ordering"
                 '-nota__fecha',
                 'producto__nombre_amistoso'
+            ).exclude(
+                borrador__isnull=False
             )
         return articulos
 
@@ -158,7 +160,11 @@ class HistorialNotas(LoginRequiredMixin, generic.ListView):
     template_name = 'gestion/notas.html'
 
     def get_queryset(self):
-        return Articulo.objects.order_by('nota__fecha')
+        return Articulo.objects.order_by(
+            'nota__fecha'
+            ).exclude(
+            borrador__isnull=False
+            )
 
 
 # REVIEW: Rematar ListaPedidos
@@ -210,7 +216,11 @@ def BusquedaArticulo(request):
         Q(producto__nombre_fabricante__icontains=b) |
         Q(producto__referencia__icontains=b)
     ).distinct(
-    ).order_by('-nota__fecha')
+    ).order_by(
+        '-nota__fecha'
+    ).exclude(
+        borrador__isnull=False
+    )
 
     paginacion = Paginator(queryset, 15)
     pagina = request.GET.get('page')
