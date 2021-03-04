@@ -100,7 +100,7 @@
               {% endif %}
             </td>
             <td>{{ articulo.producto.referencia }}</td>
-            <td>{{ articulo.producto.fabricante.nombre }}</td>
+            <td>{{ articulo.producto.fabricante.nombre|default_if_none:"Desconocido" }}</td>
             <td>
               {% if articulo.pedido %}
               {{ articulo.pedido.distribuidor.nombre }} <!-- QUESTION: Sustituir por entrega -->

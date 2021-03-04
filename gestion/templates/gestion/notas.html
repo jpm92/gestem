@@ -29,7 +29,7 @@
         <td>{{ articulo.nota.usuario }}</td>
         <td>{{ articulo.get_estado_display }}</td>
         <td><a href="{% url 'articulo' articulo.pk %}">{{ articulo.producto.nombre_fabricante }}</a></td>
-        <td>{{ articulo.producto.fabricante }}</td>
+        <td>{{ articulo.producto.fabricante|default_if_none:"No disponible" }}</td>
         <td>{{ articulo.producto.referencia }}</td>
         <td>{{ articulo.unidades }}</td>
         <td><a href="{% url 'nota' articulo.nota.pk %}">{{ articulo.nota }}</a></td>

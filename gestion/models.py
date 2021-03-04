@@ -91,7 +91,9 @@ class Producto(models.Model):
         verbose_name_plural = _("Productos")
 
     def __str__(self):
-        return f'{self.nombre_amistoso} ({self.fabricante}: {self.referencia})'
+        fabricante = self.fabricante if self.fabricante is not None else "N/A"
+        referencia = self.referencia if self.referencia is not None else "N/A"
+        return f'{self.nombre_amistoso} ({fabricante}: {referencia})'
 
     def en_curso(self):
         """ Este método comprueba si hay algun artículo relacionado con la
