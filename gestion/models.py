@@ -359,8 +359,8 @@ class Articulo(models.Model):
     )
 
     class Meta:
-        verbose_name = _("Artículo")
-        verbose_name_plural = _("Artículos")
+        verbose_name = _("Anotación")
+        verbose_name_plural = _("Anotaciones")
 
     def __str__(self):
         try:
