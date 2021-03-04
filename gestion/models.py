@@ -107,8 +107,10 @@ class Producto(models.Model):
         """ Este método devuelve la información más basica del producto en
         forma de cadena. """
 
-        cadena = f'{self.nombre_amistoso}, {self.fabricante}\
-         ({self.referencia})'
+        fabricante = self.fabricante if self.fabricante is not None else "N/A"
+        referencia = self.referencia if self.referencia is not None else "N/A"
+        cadena = f'{self.nombre_amistoso}, {fabricante}\
+         ({referencia})'
 
         return cadena
 
