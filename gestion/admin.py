@@ -96,10 +96,10 @@ class ArticuloAdmin(ImportExportModelAdmin):
             return 'Pendiente'
     pedido_link.short_description = 'pedido'
 
-    def magia(self, request):
+    def magia(self, request, solicitar=False):
         """ Este método se ejecuta al pulsar el boton en admin. Itera sobre
         todos los artículos pendientes y los autoincluye en pedidos nuevos. """
-
+        # TODO: Añador opcion de solicitar pedido TODO en UNO.
         # Obtenemos todos los articulos pendientes de clasificar que no
         # pertenezcan a ningun borrador
         articulos = Articulo.objects.filter(
