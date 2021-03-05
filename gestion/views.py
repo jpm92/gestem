@@ -121,11 +121,27 @@ def Confirmar(request, pk):
     return redirect('secretaria')
 
 
-def Reclamar(request):
+def Reclamar(request, pk):
     """ Esta vista se encarga de enviar un e-mail reclamando un articulo
     que aun no ha sido recibido. """
     # TODO: Implementar vista reclamacion
-    pass
+
+    articulo = get_object_or_404(Articulo, id=pk)
+    if articulo.estado == 'p':
+        pass  # Enviar e-mail a Staff
+
+    elif articulo.estado == 'i':
+        estado = articulo.pedido.estado
+        if estado == 's':  # Proforma solicitada
+            pass  # Enviar email a proveedor (reenviar solicitud?)
+        elif estado == 'c':  # CPM Solicitado
+            pass  # Enviar e-mail a Isa
+        elif estado == 'v':  # Para validar
+            pass  # Enviar e-mail a Juan/Isa
+        elif estado == 'p':  # Confirmado
+            pass  # Enviar e-mail a distribuidor con Isa en CC
+    else:
+        pass
 
 
 def Cancelar(request, pk):
