@@ -33,7 +33,7 @@
         <td>{{ pedido.get_estado_display }}</td>
         <td>{{ pedido.distribuidor }}</td>
         <td>{{ pedido.entrega }}</td>
-        <td>{{ pedido.centro_gasto }}</td>
+        <td>{{ pedido.centro_gasto|default_if_none:"No especificado" }}</td>
       </tr>
       {% endfor %}
     </tbody>
