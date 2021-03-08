@@ -18,3 +18,9 @@ button {
 button:hover {
   background-color: #5d8da5;
 }
+
+.botonera form {
+  width: auto;
+  height: auto;
+  display:inline-block;
+}
