@@ -315,7 +315,8 @@ class Articulo(models.Model):
         'Borrador',
         on_delete=models.SET_NULL,
         related_name='articulos',
-        null=True
+        null=True,
+        blank=True,
     )
     unidades = models.IntegerField(
         default=1
