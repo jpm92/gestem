@@ -201,7 +201,7 @@ class ArticuloInline(admin.TabularInline):
 
 
 class PedidoAdmin(ImportExportModelAdmin):
-    list_display = ('fecha_creacion', 'codigo', 'cpm', 'estado',
+    list_display = ('fecha_creacion', 'codigo', 'estado', 'cpm',
                     'narticulos', 'distribuidor', 'entrega', 'centro_gasto')
     list_filter = ('estado',)
     list_display_links = ('codigo',)
