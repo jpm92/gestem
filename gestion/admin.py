@@ -96,7 +96,7 @@ class ArticuloAdmin(ImportExportModelAdmin):
             return 'Pendiente'
     pedido_link.short_description = 'pedido'
 
-    def magia(self, request, solicitar=False):
+    def magia(self, request, solicitar=True):
         """ Este método se ejecuta al pulsar el boton en admin. Itera sobre
         todos los artículos pendientes y los autoincluye en pedidos nuevos. """
         # REVIEW: Añador opcion de solicitar pedido TODO en UNO.
@@ -177,17 +177,18 @@ class ArticuloAdmin(ImportExportModelAdmin):
                 )
             return redirect('admin:gestion_pedido_changelist')
 
-    def magiaplus(self):
-        self.magia(solicitar=True)
+    # def magiaplus(self, request):
+    #     self.magia(request, solicitar=True)
+    # no funciona, habría que usar una vista propia y redirigir a la misma.
 
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [
             path('clasificar/', self.admin_site.admin_view(self.magia)),
-            path(
-                'clasificarplus/',
-                self.admin_site.admin_view(self.magiaplus)
-            ),
+            # path(
+            #     'clasificarplus/',
+            #     self.admin_site.admin_view(self.magiaplus)
+            # ),  #IDEA: Se queda desactivado por ahora, no funciona.
         ]
         return my_urls + urls
 
