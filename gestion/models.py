@@ -528,6 +528,7 @@ class Pedido(models.Model):
 
         if boton:
             self.estado = 'r'
+            self.fecha_cierre = datetime.now()
             self.save()
 
 
