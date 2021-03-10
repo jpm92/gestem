@@ -33,7 +33,7 @@
         <td class="tg-0lax"><b>ENTREGA</b></td>
       </tr>
       <tr>
-        <td class="tg-0lax">Universidad de Granada<br>CIF: Q1818002F<br>Hospital Real, Cuesta del Hospicio s/n 18071 GRANADA<br><b>CENTRO DE GASTO:</b><br>{{ pedido.centro_gasto.codigo }}</td>
+        <td class="tg-0lax">Universidad de Granada<br>CIF: Q1818002F<br>Hospital Real, Cuesta del Hospicio s/n 18071 GRANADA<br><b>CENTRO DE GASTO:</b><br>{{ pedido.centro_gasto.codigo|default_if_none:"No especificado." }}</td>
         <td class="tg-0lax">{% autoescape off %}{{ pedido.entrega.html }}{% endautoescape %}</td>
       </tr>
     </tbody>
