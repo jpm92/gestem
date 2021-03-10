@@ -417,7 +417,7 @@ class Pedido(models.Model):
     )
     cpm = models.CharField(
         max_length=13,
-        default=_('Pendiente.'),
+        # default=_('Pendiente.'),
         blank=True,
         verbose_name=_('CPM')
     )
