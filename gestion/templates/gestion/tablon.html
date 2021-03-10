@@ -112,7 +112,7 @@
             </td>
             <td>{{ articulo.unidades }}</td>
             <td>
-              {% if articulo.pedido %}
+              {% if articulo.pedido %} <!-- TODO: desactivar boton ñara prdidos recibidos -->
                 <a href="{% url 'recepcion' articulo.pk %}" class="btn btn-success active py-1 px-2"
                     role="button" aria-pressed="true"><i class="far fa-check-circle"></i></a>
               {% else %}
