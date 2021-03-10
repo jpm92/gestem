@@ -174,7 +174,7 @@ class HistorialNotas(LoginRequiredMixin, generic.ListView):
     model = Articulo
     paginate_by = 15
     template_name = 'gestion/notas.html'
-
+    # FIXME: Corregir orden listado
     def get_queryset(self):
         return Articulo.objects.order_by(
             'nota__fecha'
