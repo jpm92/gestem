@@ -55,3 +55,83 @@ hr {
   padding: 0.08em;
   border-radius: 0.2rem;
 }
+
+/* Tooltip container */
+.usar-tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+.usar-tooltip:hover {
+  border-bottom: none; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.usar-tooltip .texto-tooltip {
+  visibility: hidden;
+  width: 150px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  top: 105%;
+  left: 50%;
+  margin-left: -75px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.usar-tooltip .texto-tooltip::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;  /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.usar-tooltip:hover .texto-tooltip,
+.usar-tooltip-boton:hover .texto-tooltip-boton{
+  visibility: visible;
+}
+
+/* Tooltip container */
+.usar-tooltip-boton {
+  position: relative;
+  display: inline-block;
+}
+
+.usar-tooltip-boton .texto-tooltip-boton {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  top: 105%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.usar-tooltip-boton .texto-tooltip-boton::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;  /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
