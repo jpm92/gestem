@@ -96,13 +96,13 @@
             </td>
             <td class="user-select-all"> <!-- TODO: Modificar logica, se queda vacio si se elimina el pedido. -->
               {% if articulo.estado != 'p'%}
-              {{ articulo.pedido.cpm }}
+              {{ articulo.pedido.cpm|default:"Pendiente" }}
               {% else %}
               Pendiente.
               {% endif %}
             </td>
             <td>{{ articulo.producto.referencia }}</td>
-            <td>{{ articulo.producto.fabricante.nombre|default_if_none:"Desconocido" }}</td>
+            <td>{{ articulo.producto.fabricante.nombre|default:"Desconocido" }}</td>
             <td>
               {% if articulo.pedido %}
               {{ articulo.pedido.distribuidor.nombre }} <!-- QUESTION: Sustituir por entrega -->
