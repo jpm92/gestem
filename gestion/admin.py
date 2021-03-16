@@ -84,6 +84,12 @@ class ArticuloAdmin(ImportExportModelAdmin):
         except AttributeError:
             return f'Objeto {obj.pk}'
 
+    def distribuidor(self, obj):
+        try:
+            return obj.producto.distribuidor
+        except AttributeError:
+            return f'Objeto {obj.pk}'
+
     def pedido_link(self, obj):
         """ Este método añade un enlace al objeto "Pedido" relacionado con el
         objeto Articulo de la lista de ArticuloAdmin. """
