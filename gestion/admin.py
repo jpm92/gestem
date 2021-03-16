@@ -35,7 +35,7 @@ class ProductoAdmin(ImportExportModelAdmin):
 
 class ArticuloAdmin(ImportExportModelAdmin):
 
-    list_display = ('fecha', 'usuario', 'producto', 'dsitribuidor', 'unidades',
+    list_display = ('fecha', 'usuario', 'producto', 'distribuidor', 'unidades',
                     'nota', 'estado', 'pedido_link', 'entrega',)
     list_filter = ('estado', 'nota__entrega', 'pedido__distribuidor',
                    'pedido__estado',)  # REVIEW: ¿Alguna manera de evitar esta
