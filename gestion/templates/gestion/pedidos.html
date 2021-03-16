@@ -29,7 +29,7 @@
       <tr>
         <td>{{ pedido.fecha_creacion|date:"SHORT_DATETIME_FORMAT" }}</td>
         <td><a href="{% url 'pedido' pedido.pk %}">{{ pedido.codigo }}</a></td>
-        <td>{{ pedido.cpm|default_if_none:"Pendiente." }}</td>
+        <td>{{ pedido.cpm|default:"Pendiente." }}</td>
         <td>{{ pedido.get_estado_display }}</td>
         <td>{{ pedido.distribuidor }}</td>
         <td>{{ pedido.entrega }}</td>
