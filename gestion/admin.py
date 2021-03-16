@@ -227,6 +227,7 @@ class PedidoAdmin(ImportExportModelAdmin):
         }),
     )
     inlines = (ArticuloInline,)
+
     def cpm(self, obj):
         return obj.cpm
     cpm.empty_value_display = 'Pendiente.'
