@@ -35,8 +35,8 @@ class ProductoAdmin(ImportExportModelAdmin):
 
 class ArticuloAdmin(ImportExportModelAdmin):
 
-    list_display = ('fecha', 'usuario', 'producto', 'unidades', 'nota',
-                    'estado', 'pedido_link', 'entrega',)
+    list_display = ('fecha', 'usuario', 'producto', 'dsitribuidor', 'unidades',
+                    'nota', 'estado', 'pedido_link', 'entrega',)
     list_filter = ('estado', 'nota__entrega', 'pedido__distribuidor',
                    'pedido__estado',)  # REVIEW: ¿Alguna manera de evitar esta
     # redundancia? Ahora aparecen 2 filtros, uno para el estado de Articulo
