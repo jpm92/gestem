@@ -681,6 +681,7 @@ class Borrador(models.Model):
             articulo.pk = None
             articulo.pedido = pedido
             articulo.nota = nota
+            articulo.estado = 'i'
             articulo.borrador = None
             articulo.save()
         if solicitar:
