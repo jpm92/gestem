@@ -177,6 +177,7 @@ class ArticuloAdmin(ImportExportModelAdmin):
                     if solicitar:
                         p.email()
                         p.estado = 's'
+                        p.save()
             self.message_user(
                 request,
                 _(f'¡{cuenta} pedidos creados con éxito!')
