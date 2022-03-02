@@ -230,7 +230,9 @@ def BusquedaArticulo(request):
     ).filter(
         Q(producto__nombre_amistoso__icontains=b) |
         Q(producto__nombre_fabricante__icontains=b) |
-        Q(producto__referencia__icontains=b)
+        Q(producto__referencia__icontains=b) |
+        Q(pedido__cpm__icontains=b) |
+        Q(pedido__codigo__icontains=b)
     ).distinct(
     ).order_by(
         '-nota__fecha'
