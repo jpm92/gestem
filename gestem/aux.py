@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 import smtplib
-import email.message
+# import email.message
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import unicodedata
@@ -110,10 +110,10 @@ def mailer(tablacsv="users.csv", credenciales="credenciales.txt"):
                     </header>
                     <div class="container">
                       <p>
-                        Hola $(nombre), en los próximos días estará disponible una
-                        nueva versión de la aplicación web para anotar pedidos
-                        del laboratorio. Podrás acceder a ella a través del
-                        enlace de siempre:
+                        Hola $(nombre), en los próximos días estará disponible
+                        una nueva versión de la aplicación web para anotar
+                        pedidos del laboratorio. Podrás acceder a ella a través
+                        del enlace de siempre:
                         <a href="https://terstem.ugr.es">terstem.ugr.es</a>
                       </p>
                       <p>
