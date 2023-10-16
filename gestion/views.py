@@ -19,7 +19,7 @@ from gestion.forms import (
     RecepcionForm,
     CPMForm,
 )
-from gestem.aux import keygen
+from gestem.tools import keygen
 from django.views.generic.edit import CreateView
 from django.forms import formset_factory
 from django.utils.translation import gettext_lazy as _

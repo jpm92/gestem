@@ -5,7 +5,7 @@ from datetime import datetime, time
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from gestion.tasks import solicitud_email
-from gestem.aux import keygen
+from gestem.tools import keygen
 from django.utils import timezone
 
 

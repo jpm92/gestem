@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.urls import path
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
-from gestem.aux import keygen
+from gestem.tools import keygen 
 from django.utils.html import format_html
 from django.urls import reverse
 from gestion.models import (
