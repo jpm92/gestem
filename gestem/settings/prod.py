@@ -20,6 +20,7 @@ STATIC_ROOT = "/srv/www/gestem/static/"
 
 EMAIL_USE_TLS = True
 
+SERVER_EMAIL = 'noreply_gestem@ugr.es' # This is the e-mail from which errors are sent.
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_HOST_IMAP = os.getenv('EMAIL_HOST_IMAP')
 EMAIL_PORT = '587'
