@@ -213,7 +213,7 @@ class PedidoAdmin(ImportExportModelAdmin):
                     'narticulos', 'distribuidor', 'entrega', 'centro_gasto')
     list_filter = ('estado',)
     list_display_links = ('codigo',)
-    actions = ('solicitar', 'cpm_check')
+    actions = ('presupuesto', 'pedido_firme', 'cpm_check')
     readonly_fields = ('fecha_creacion', 'fecha_cpm', 'fecha_confirmacion',
                        'fecha_cierre', 'codigo')
     fieldsets = (
