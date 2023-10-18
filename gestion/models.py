@@ -484,7 +484,7 @@ class Pedido(models.Model):
     def __str__(self):
         return f'{self.codigo}'
 
-    def email(self, usuario=None):
+    def email(self, usuario=None, tipo="presupuesto"):
         """ Este método envia por email una solicitud de presupuesto para
         los articulos incluidos en el pedido. """
 
@@ -495,10 +495,27 @@ class Pedido(models.Model):
             saludo = 'Buenas tardes'
         elif time(20) <= hora <= time(23, 49):
             saludo = 'Buenas noches'
-        subject = f'[{self.entrega}] SOLICITUD PROFORMA CODIGO {self.codigo}'
         context = {'pedido': self, 'saludo': saludo}
         if usuario:
             context['usuario'] = usuario
+        
+        if tipo=="presupuesto":
+            context['solicitud'] = "nos gustaría solicitar una factura proforma para los productos listados a continuación."
+            context['titulo'] = "Solicitud de presupuesto"
+            subject = f'[{self.entrega}] SOLICITUD PROFORMA CODIGO {self.codigo}'
+        elif tipo=="pedido":
+            context["solicitud"] = "remitimos pedido en firme para los productos listados a continuación."
+            context['titulo'] = "Pedido en firme"
+            subject = f'[{self.entrega}] PEDIDO EN FIRME CODIGO {self.codigo}'
+
+        # FIX: Lo lógico sería implementar un método en la clase CentroGasto similar al meth::html() de la clase Entrega, de manera que
+        # generara esta información dinamicamente en base a la informacion referente a los datos de facturacion almacenada en la base de datos.
+        # Para eso habría que añadir mas campos al modelo Entrega y actualizar las tablas (muy engorroso y peligroso en produccion). El codigo
+        # a continuacion soluciona el problema dejando los datos hard-coded, pero es solo una solucion a corto plazo.
+        if self.centro_gasto.pertenencia_ugr==True:
+            context['facturacion'] = "Universidad de Granada<br>CIF: Q1818002F<br>Hospital Real, Cuesta del Hospicio s/n 18071 GRANADA<br><b>CENTRO DE GASTO:</b>"
+        else:
+            context['facturacion'] = "FIBAO<br>CIF: G-18374199 <br>Avda. de Madrid nº15 18012 GRANADA<br><b>CENTRO DE GASTO:</b>"
 
         html_message = render_to_string(
             'gestion/solicitud_email.html',

@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-  <p>{{ saludo }}, nos gustaría solicitar una factura proforma para los productos listados a continuación.</p>
+  <p>{{ saludo }}, {{ solicitud }}</p>
   <p>
     Les rogamos presten atención a la <b>dirección de entrega</b> que se indica, dado
     que nuestro grupo de investigación está repartido en varios laboratorios separados geográficamente entre sí.
@@ -24,7 +24,7 @@
   <table class="tg">
     <thead>
       <tr>
-        <th colspan="2">Solicitud de presupuesto nº <span class="codigo">{{ pedido.codigo }}</span></th>
+        <th colspan="2">{{ titulo }} nº <span class="codigo">{{ pedido.codigo }}</span></th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
         <td class="tg-0lax"><b>ENTREGA</b></td>
       </tr>
       <tr>
-        <td class="tg-0lax">Universidad de Granada<br>CIF: Q1818002F<br>Hospital Real, Cuesta del Hospicio s/n 18071 GRANADA<br><b>CENTRO DE GASTO:</b><br>{{ pedido.centro_gasto.codigo|default_if_none:"No especificado." }}</td>
+        <td class="tg-0lax">{% autoescape off %}{{ facturacion }}{% endautoescape %}<br>{{ pedido.centro_gasto.codigo|default_if_none:"No especificado." }}</td>
         <td class="tg-0lax">{% autoescape off %}{{ pedido.entrega.html }}{% endautoescape %}</td>
       </tr>
     </tbody>

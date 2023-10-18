@@ -238,7 +238,7 @@ class PedidoAdmin(ImportExportModelAdmin):
 
     narticulos.short_description = _("nº articulos")
 
-    def solicitar(self, request, queryset):
+    def presupuesto(self, request, queryset):
         """ Acción para solicitar por e-mail presupuesto para los artículos del
         pedido al proveedor asignado. """
 
@@ -260,7 +260,31 @@ class PedidoAdmin(ImportExportModelAdmin):
                 _('Email enviado correctamente.'),
                 level='success'
             )
-    solicitar.short_description = _("Enviar correo")
+    presupuesto.short_description = _("Solicitar presupuesto.")
+
+    def pedido_firme(self, request, queryset):
+        """ Acción para enviar por e-mail un pedido en firme para los artículos del
+        pedido al proveedor asignado. """
+
+        usuario = request.user.get_short_name()
+
+        for pedido in queryset:
+            pedido.email(usuario)
+            pedido.estado = 's'
+            pedido.save()
+        if queryset.count() > 1:
+            self.message_user(
+                request,
+                _('Emails enviados correctamente.'),
+                level='success'
+            )
+        else:
+            self.message_user(
+                request,
+                _('Email enviado correctamente.'),
+                level='success'
+            )
+    pedido_firme.short_description = _("Pedido en firme.")
 
     def cpm_check(self, request, queryset):
         """ Acción para marcar los pedidos seleccionados como "CPM solicitado",
