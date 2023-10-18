@@ -269,8 +269,8 @@ class PedidoAdmin(ImportExportModelAdmin):
         usuario = request.user.get_short_name()
 
         for pedido in queryset:
-            pedido.email(usuario)
-            pedido.estado = 's'
+            pedido.email(usuario, tipo="pedido")
+            pedido.estado = 'p'
             pedido.save()
         if queryset.count() > 1:
             self.message_user(

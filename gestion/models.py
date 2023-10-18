@@ -512,7 +512,9 @@ class Pedido(models.Model):
         # generara esta información dinamicamente en base a la informacion referente a los datos de facturacion almacenada en la base de datos.
         # Para eso habría que añadir mas campos al modelo Entrega y actualizar las tablas (muy engorroso y peligroso en produccion). El codigo
         # a continuacion soluciona el problema dejando los datos hard-coded, pero es solo una solucion a corto plazo.
-        if self.centro_gasto.pertenencia_ugr==True:
+        if self.centro_gasto is None:
+            pass #TODO: Implementar mensaje de error.
+        elif self.centro_gasto.pertenencia_ugr is True:
             context['facturacion'] = "Universidad de Granada<br>CIF: Q1818002F<br>Hospital Real, Cuesta del Hospicio s/n 18071 GRANADA<br><b>CENTRO DE GASTO:</b>"
         else:
             context['facturacion'] = "FIBAO<br>CIF: G-18374199 <br>Avda. de Madrid nº15 18012 GRANADA<br><b>CENTRO DE GASTO:</b>"
